@@ -17,9 +17,9 @@ public class Arnold {
 
     //Define Hardware Objects
     public DcMotor      linearActuator      = null;
-    public Servo        turner            = null;
-    public Servo        rollerOne       = null;
-    public Servo        rollerTwo        = null;
+    public Servo        turner              = null;
+    public Servo        rollerOne           = null;
+    public Servo        rollerTwo           = null;
     public VoltageSensor voltSensor         = null;
 
     // Need some features from the Linear Opmode to make the lift work
@@ -49,9 +49,7 @@ public class Arnold {
 
     //Constants for turnythingy
     public static final double      POS_ONE       = 0;
-    public static final double      POS_TWO      = 0.25;
-    public static final double      POS_THREE     = 0.5;
-    public static final double      POS_FOUR     = 0.75;
+    public static final double      POS_TWO      = 1 - POS_ONE;
 
 
     LiftState mliftstate = LiftState.UNKNOWN;
@@ -87,8 +85,6 @@ public class Arnold {
         rollerOne.setPosition(ROLLER_ONE_INITIAL);
         rollerTwo.setPosition(ROLLER_TWO_INITIAL);
 
-        // get motor details
-
     }
 
        //Wadlow the lift's methods -  while loop type (use during Auto)
@@ -97,13 +93,10 @@ public class Arnold {
         liftToTargetHeight(WADLOWLIFTUP ,3);
     }
     public void liftPartial() {
-
         liftToTargetHeight(WADLOWLIFTPARTIAL ,3);
     }
     public void liftLoad() {
         liftToTargetHeight(WADLOWLIFTLOAD,1);
-
-
     }
 
     // get Wadlow's Position need a local variable to do this
@@ -115,12 +108,10 @@ public class Arnold {
 
     public void setWADLOWToLoad(){
         linearActuator.setTargetPosition( (int)(WADLOWLIFTLOAD *  TICKS_PER_LIFT_IN));
-
     }
 
     public void setWADLOWToPartial(){
         linearActuator.setTargetPosition( (int)(WADLOWLIFTPARTIAL *  TICKS_PER_LIFT_IN));
-
     }
 
     // WADLOW mechanical reset use in all opmodes Telop and Auto to reset the encoders
@@ -150,13 +141,6 @@ public class Arnold {
         turner.setPosition(POS_TWO);
     }
 
-    public void turnerSetPosition3() throws InterruptedException {
-        turner.setPosition(POS_THREE);
-    }
-
-    public void turnerSetPosition4() throws InterruptedException {
-        turner.setPosition(POS_FOUR);
-    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

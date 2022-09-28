@@ -45,7 +45,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 48/25.4; // in mecanum wheels are 96mm dia
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 10.1102;// 16.5 is actual
+    public static double TRACK_WIDTH = 14.5;// 16.5 is actual
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
