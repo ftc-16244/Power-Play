@@ -1,6 +1,7 @@
 package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeBlueDark;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
@@ -15,17 +16,22 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity myFirstBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be blue
                 .setColorScheme(new ColorSchemeBlueDark())
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 13)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-                                .forward(30)
+                        drive.trajectorySequenceBuilder(new Pose2d(-34, 61, Math.toRadians(-90)))
+                                .forward(48)
+                                .strafeLeft(12)
+                                .forward(3)
+                                .back(3)
+                                .strafeRight(12)
                                 .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
+                                .back(24)
+                                .forward(24)
+                                .strafeRight(12)
+                                .forward(3)
+                                .back(3)
+                                .strafeLeft(36)
+                                .forward(24)
                                 .build()
                 );
 
