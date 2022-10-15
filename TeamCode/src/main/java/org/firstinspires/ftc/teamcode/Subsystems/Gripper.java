@@ -26,16 +26,15 @@ public class Gripper {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants for rollers
-    public static final double      GRIPPER_LEFT_INITIAL =  0.5;
-    public static final double      GRIPPER_LEFT_FINAL =  0.55;
-    public static final double      GRIPPER_RIGHT_INITIAL =  0.5;
-    public static final double      GRIPPER_RIGHT_FINAL =  0.45;
+    public static final double      GRIPPER_LEFT_INITIAL =  0.55;
+    public static final double      GRIPPER_LEFT_FINAL = 0.6 ;
+    public static final double      GRIPPER_RIGHT_INITIAL = 0.63 ;
+    public static final double      GRIPPER_RIGHT_FINAL =  0.58;
 
 
     //Constants for turnythingy
-    public static final double      POS_ONE       = 0.5;
-    public static final double      POS_TWO      = 0;
-    public static final double      POS_THREE      = 1;
+    public static final double      POS_ONE       = 0.17;
+    public static final double      POS_TWO      = 0.83;
 
     LinearOpMode opmode;
     // Constructor with opmode so we can access opmode features
@@ -69,9 +68,6 @@ public class Gripper {
         turner.setPosition(POS_TWO);
     }
 
-    public void turnerSetPosition3() throws InterruptedException {
-        turner.setPosition(POS_THREE);
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Auto Only for roller suctioning and removing.
     public void rollersInit(){

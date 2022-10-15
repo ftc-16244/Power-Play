@@ -46,11 +46,11 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
         slideTrainer.init(hardwareMap);
 
         gripper.init(hardwareMap);
-        gripper.turnerSetPosition1();
-        gripper.rollersInit();
+        //gripper.turnerSetPosition1();
+        //gripper.rollersInit();
 
-        slideTrainer.slideMechanicalReset(); // run reset on init to make sure slide is retracted all the way\
-        slideTrainerState = SlideTrainerState.MECH_RESET; // init puts us in this state, the timew and limit swtch tell when we coe out of it.
+        //slideTrainer.slideMechanicalReset(); // run reset on init to make sure slide is retracted all the way\
+        //slideTrainerState = SlideTrainerState.MECH_RESET; // init puts us in this state, the timew and limit swtch tell when we coe out of it.
         telemetry.addData("Lift State", slideTrainerState);
         dashboard = FtcDashboard.getInstance();
 
@@ -90,41 +90,27 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
                 slideTrainer.setSlideLevel2();
             }
 
-
-            /**
-             *
-             * Gamepad #1 Back Button
-             *
-             **/
             if (gamepad1.back) {
                 slideTrainer.slideMechanicalReset();
                 slideTrainer.targetHeight = 0;
             }
 
 
-            /**
-             *
-             * Gamepad #2
-             *
-             **/
-
-            if (gamepad2.dpad_up) {
+            if (gamepad2.dpad_down) {
                 gripper.turnerSetPosition1();
             }
 
-            if (gamepad2.dpad_right) {
+            if (gamepad2.dpad_up) {
                 gripper.turnerSetPosition2();
             }
-            if (gamepad2.dpad_left) {
-                gripper.turnerSetPosition3();
-            }
+
 
             if (gamepad2.a) {
                 gripper.rollersInit();
             }
 
             if (gamepad2.b) {
-                gripper.rollersInit();
+                gripper.rollersFinal();
             }
 
 
