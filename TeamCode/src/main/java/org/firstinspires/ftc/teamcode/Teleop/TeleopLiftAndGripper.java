@@ -108,12 +108,15 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
              *
              **/
 
-            if (gamepad2.x) {
+            if (gamepad2.dpad_up) {
                 gripper.turnerSetPosition1();
             }
 
-            if (gamepad2.y) {
+            if (gamepad2.dpad_right) {
                 gripper.turnerSetPosition2();
+            }
+            if (gamepad2.dpad_left) {
+                gripper.turnerSetPosition3();
             }
 
             if (gamepad2.a) {
