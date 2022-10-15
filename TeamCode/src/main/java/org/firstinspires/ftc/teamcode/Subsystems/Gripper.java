@@ -17,8 +17,8 @@ public class Gripper {
 
     //Define Hardware Objects
     public Servo        turner              = null;
-    public Servo        rollerOne           = null;
-    public Servo        rollerTwo           = null;
+    public Servo        gripperLeft           = null;
+    public Servo        gripperRight           = null;
     public VoltageSensor voltSensor         = null;
 
     // Need some features from the Linear Opmode to make the lift work
@@ -26,15 +26,15 @@ public class Gripper {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants for rollers
-    public static final double      ROLLER_ONE_INITIAL =  0;
-    public static final double      ROLLER_ONE_FINAL =  0.25;
-    public static final double      ROLLER_TWO_INITIAL =  0;
-    public static final double      ROLLER_TWO_FINAL =  0.75;
+    public static final double      GRIPPER_LEFT_INITIAL =  0.55;
+    public static final double      GRIPPER_LEFT_FINAL = 0.6 ;
+    public static final double      GRIPPER_RIGHT_INITIAL = 0.63 ;
+    public static final double      GRIPPER_RIGHT_FINAL =  0.58;
 
 
     //Constants for turnythingy
-    public static final double      POS_ONE       = 0;
-    public static final double      POS_TWO      = 1 - POS_ONE;
+    public static final double      POS_ONE       = 0.17;
+    public static final double      POS_TWO      = 0.83;
 
     LinearOpMode opmode;
     // Constructor with opmode so we can access opmode features
@@ -50,10 +50,10 @@ public class Gripper {
         turner = hwMap.get(Servo.class,"turner");
 
         // Initialize the roller one
-        rollerOne = hwMap.get(Servo.class,"rollerOne");
+        gripperLeft = hwMap.get(Servo.class,"gripperLeft");
 
         // Initialize the roller two
-        rollerTwo = hwMap.get(Servo.class,"rollerTwo");
+        gripperRight = hwMap.get(Servo.class,"gripperRight");
 
         // pre-position servos
 
@@ -71,12 +71,12 @@ public class Gripper {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Auto Only for roller suctioning and removing.
     public void rollersInit(){
-        rollerOne.setPosition(ROLLER_ONE_INITIAL);
-        rollerTwo.setPosition(ROLLER_TWO_INITIAL);
+        gripperLeft.setPosition(GRIPPER_LEFT_INITIAL);
+        gripperRight.setPosition(GRIPPER_RIGHT_INITIAL);
     }
     public void rollersFinal(){
-        rollerOne.setPosition(ROLLER_ONE_FINAL);
-        rollerTwo.setPosition(ROLLER_TWO_FINAL);
+        gripperLeft.setPosition(GRIPPER_LEFT_FINAL);
+        gripperRight.setPosition(GRIPPER_RIGHT_FINAL);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
