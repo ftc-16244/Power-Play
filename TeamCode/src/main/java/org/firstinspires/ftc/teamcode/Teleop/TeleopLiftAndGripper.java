@@ -46,7 +46,7 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
         slideTrainer.init(hardwareMap);
 
         gripper.init(hardwareMap);
-        //gripper.turnerSetPosition1();
+        gripper.turnerSetPosition1();//back
         //gripper.rollersInit();
 
         //slideTrainer.slideMechanicalReset(); // run reset on init to make sure slide is retracted all the way\
@@ -73,44 +73,58 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
 
 
             if (gamepad1.dpad_right) {
-                slideTrainer.setSlideLevel4();;
+
             }
 
             if (gamepad1.dpad_up) {
-                slideTrainer.setSlideLevel3();
+
 
             }
 
-            if (gamepad1.dpad_down) {
-                slideTrainer.setSlideLevel1();
+             if (gamepad1.dpad_down) {
+
 
             }
 
             if (gamepad1.dpad_left) {
-                slideTrainer.setSlideLevel2();
+
             }
 
             if (gamepad1.back) {
                 slideTrainer.slideMechanicalReset();
                 slideTrainer.targetHeight = 0;
             }
+            if (gamepad1.left_trigger >0.25) {
+                gripper.rollersInit();
+            }
 
-
-            if (gamepad2.dpad_down) {
+            if (gamepad1.right_trigger > 0.25) {
+                gripper.rollersFinal();
+            }
+//// GAMEPAD #2/////////////////////////
+            if (gamepad2.a) {
                 gripper.turnerSetPosition1();
             }
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.y) {
                 gripper.turnerSetPosition2();
             }
 
 
-            if (gamepad2.a) {
-                gripper.rollersInit();
+            if (gamepad2.dpad_left) {
+                slideTrainer.setSlideLevel3();
             }
 
-            if (gamepad2.b) {
-                gripper.rollersFinal();
+            if (gamepad2.dpad_up) {
+                slideTrainer.setSlideLevel4();
+            }
+
+            if (gamepad2.left_trigger > 0.25) {
+                slideTrainer.setSlideLevel2();
+            }
+
+            if (gamepad2.right_trigger > 0.25) {
+                slideTrainer.setSlideLevel1();
             }
 
 
