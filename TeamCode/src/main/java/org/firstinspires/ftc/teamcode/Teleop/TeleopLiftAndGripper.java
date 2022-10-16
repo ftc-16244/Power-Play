@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
 @TeleOp(group = "Test")
-//@Disabled
+@Disabled
 public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
 
     ElapsedTime runtime = new ElapsedTime();
@@ -70,6 +70,7 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
                             -gamepad1.right_stick_x
                     )
             );
+
 
 
             if (gamepad1.dpad_right) {
