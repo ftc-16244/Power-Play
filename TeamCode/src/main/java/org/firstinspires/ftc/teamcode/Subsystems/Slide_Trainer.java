@@ -30,8 +30,8 @@ public class Slide_Trainer {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants Lift
-    public  static double            SLIDELIFTSPEED                  = 1.0; //
-    public static  double            SLIDELOWERSPEED                 = -0.8; // use the LOAD instead of down. Zero pushes wheels off the mat
+    public  static double           SLIDELIFTSPEED                  = 1.0; //
+    public static  double           SLIDELOWERSPEED                 = -0.8; // use the LOAD instead of down. Zero pushes wheels off the mat
     public static final double      SLIDE_LEVEL_1                   = 0; // inches Ground Level
     public static final double      SLIDE_LEVEL_2                   = 7; // inches Cone Loading Level
     public static final double      SLIDE_LEVEL_3                   = 18; // inches 12" Junction
@@ -40,22 +40,21 @@ public class Slide_Trainer {
 
     private static final double     TICKS_PER_MOTOR_REV             = 145.1; // goBilda 1150  //312 RPM  537.7
     private static final double     PULLEY_DIA                      = 40; // milimeters
-    private static final double     SLIDE_LIFT_DISTANCE_PER_REV     = PULLEY_DIA * Math.PI / 25.4; //  lift = circimference of the pulley converted to inches
-    private static final double      TICKS_PER_LIFT_IN               = 29; //TICKS_PER_MOTOR_REV /  SLIDE_LIFT_DISTANCE_PER_REV; // 109 and change
+    private static final double     SLIDE_LIFT_DISTANCE_PER_REV     = PULLEY_DIA * Math.PI / 25.4;
+    private static final double     TICKS_PER_LIFT_IN               = TICKS_PER_MOTOR_REV / SLIDE_LIFT_DISTANCE_PER_REV;
 
-    public static double SLIDE_NEW_P = 10.0; // 2.5 default
-    public static double SLIDE_NEW_I = 0.5;// 0.1 default
-    public static double SLIDE_NEW_D = 0.0; // 0.2 default
-    public static double SLIDE_NEW_F = 0; // 10 default
+    public static double            SLIDE_NEW_P                     = 10.0; // 2.5 default
+    public static double            SLIDE_NEW_I                     = 0.5;// 0.1 default
+    public static double            SLIDE_NEW_D                     = 0.0; // 0.2 default
+    public static double            SLIDE_NEW_F                     = 0; // 10 default
 
 
     public double  targetHeight;
 
     SlideTrainerState slideTrainerState = SlideTrainerState.UNKNOWN;
 
-    //Telemetry telemetry;
 
-    // constructor with opmmode passed in
+    /// constructor with opmmode passed in
     public Slide_Trainer(LinearOpMode opmode) {
         this.opmode = opmode;
 
@@ -79,7 +78,7 @@ public class Slide_Trainer {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    // simple getter and setter methods
+    // simple getter and setter methods for use in state machines
     public double getSlidePos(){
         double slidePos;
         slidePos = slidemotor.getCurrentPosition()/ TICKS_PER_LIFT_IN; //returns in inches
@@ -89,25 +88,25 @@ public class Slide_Trainer {
     public void  setSlideLevel1(){
         targetHeight = ( SLIDE_LEVEL_1 );
         liftToTargetHeight(targetHeight,3);
-        //servo.setPosition(0);
+
     }
 
     public void setSlideLevel2(){
         targetHeight = ( SLIDE_LEVEL_2);
         liftToTargetHeight(targetHeight,3);
-        //servo.setPosition(0);
+
     }
 
     public void setSlideLevel3(){
         targetHeight = ( SLIDE_LEVEL_3);
         liftToTargetHeight(targetHeight,3);
-        //servo.setPosition(1.0);
+
     }
 
     public void setSlideLevel4(){
         targetHeight = ( SLIDE_LEVEL_4);
         liftToTargetHeight(targetHeight,3);
-        //servo.setPosition(1.0);
+
     }
 
 
@@ -154,17 +153,6 @@ public class Slide_Trainer {
             // reset the timeout time and start motion.
             runtime.reset();
             slidemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // keep looping while we are still active, and there is time left, and thr motor is running.
-            // Note: We use (isBusy() in the loop test, which means that when the motor hits
-            // its target position, motion will stop.
-
-            //while (opmode.opModeIsActive() &&
-            //      (runtime.seconds() < timeoutS) && slidemotor.isBusy()) {
-
-
-            //}
-
 
 
         }

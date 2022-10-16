@@ -16,25 +16,25 @@ import static java.lang.Thread.sleep;
 public class Gripper {
 
     //Define Hardware Objects
-    public Servo        turner              = null;
-    public Servo        gripperLeft           = null;
-    public Servo        gripperRight           = null;
-    public VoltageSensor voltSensor         = null;
+    public Servo            turner             = null;
+    public Servo            gripperLeft        = null;
+    public Servo            gripperRight       = null;
+    public VoltageSensor    voltSensor         = null;
 
     // Need some features from the Linear Opmode to make the lift work
 
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants for rollers
-    public static final double      GRIPPER_LEFT_INITIAL =  0.55;
-    public static final double      GRIPPER_LEFT_FINAL = 0.6 ;
-    public static final double      GRIPPER_RIGHT_INITIAL = 0.63 ;
-    public static final double      GRIPPER_RIGHT_FINAL =  0.58;
+    public static final double      GRIPPER_LEFT_INITIAL    = 0.55; // not gripped
+    public static final double      GRIPPER_LEFT_FINAL      = 0.6 ; // cone gripped
+    public static final double      GRIPPER_RIGHT_INITIAL   = 0.63 ; // not gripped
+    public static final double      GRIPPER_RIGHT_FINAL     = 0.58; // gripped
 
 
     //Constants for turnythingy
-    public static final double      POS_ONE       = 0.17;
-    public static final double      POS_TWO      = 0.83;
+    public static final double      POS_ONE       = 0.17; // facing to the back
+    public static final double      POS_TWO      = 0.83; // facing to the front
 
     LinearOpMode opmode;
     // Constructor with opmode so we can access opmode features
