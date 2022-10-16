@@ -49,6 +49,7 @@ public class Gripper {
         // Initialize tuner the servo that rotates the cone capture bucket
         turner = hwMap.get(Servo.class,"turner");
 
+
         // Initialize the roller one
         gripperLeft = hwMap.get(Servo.class,"gripperLeft");
 
@@ -61,11 +62,11 @@ public class Gripper {
 
     //Turner methods
     public void turnerSetPosition1() throws InterruptedException {
-        turner.setPosition(POS_ONE);
+        turner.setPosition(POS_ONE); // back
     }
 
     public void turnerSetPosition2() throws InterruptedException {
-        turner.setPosition(POS_TWO);
+        turner.setPosition(POS_TWO);//fwd
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

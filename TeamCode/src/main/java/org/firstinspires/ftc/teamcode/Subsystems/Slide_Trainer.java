@@ -31,11 +31,11 @@ public class Slide_Trainer {
 
     //Constants Lift
     public  static double            SLIDELIFTSPEED                  = 1.0; //
-    public static  double            SLIDELOWERSPEED                 = -0.4; // use the LOAD instead of down. Zero pushes wheels off the mat
-    public static final double      SLIDE_LEVEL_1                   = 1; // inches
-    public static final double      SLIDE_LEVEL_2                   = 13; // inches
-    public static final double      SLIDE_LEVEL_3                   = 25; // inches
-    public static final double      SLIDE_LEVEL_4                   = 38; // inches
+    public static  double            SLIDELOWERSPEED                 = -0.8; // use the LOAD instead of down. Zero pushes wheels off the mat
+    public static final double      SLIDE_LEVEL_1                   = 0; // inches Ground Level
+    public static final double      SLIDE_LEVEL_2                   = 7; // inches Cone Loading Level
+    public static final double      SLIDE_LEVEL_3                   = 18; // inches 12" Junction
+    public static final double      SLIDE_LEVEL_4                   = 30; // inches 24" Junction
 
 
     private static final double     TICKS_PER_MOTOR_REV             = 145.1; // goBilda 1150  //312 RPM  537.7
@@ -44,7 +44,7 @@ public class Slide_Trainer {
     private static final double      TICKS_PER_LIFT_IN               = 29; //TICKS_PER_MOTOR_REV /  SLIDE_LIFT_DISTANCE_PER_REV; // 109 and change
 
     public static double SLIDE_NEW_P = 10.0; // 2.5 default
-    public static double SLIDE_NEW_I = 0.1;// 0.1 default
+    public static double SLIDE_NEW_I = 0.5;// 0.1 default
     public static double SLIDE_NEW_D = 0.0; // 0.2 default
     public static double SLIDE_NEW_F = 0; // 10 default
 
