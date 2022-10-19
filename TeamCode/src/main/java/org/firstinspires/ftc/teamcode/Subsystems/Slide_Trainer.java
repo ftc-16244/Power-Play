@@ -34,8 +34,9 @@ public class Slide_Trainer {
     public static  double           SLIDELOWERSPEED                 = -0.8; // use the LOAD instead of down. Zero pushes wheels off the mat
     public static final double      SLIDE_LEVEL_1                   = 0; // inches Ground Level
     public static final double      SLIDE_LEVEL_2                   = 7; // inches Cone Loading Level
-    public static final double      SLIDE_LEVEL_3                   = 18; // inches 12" Junction
-    public static final double      SLIDE_LEVEL_4                   = 30; // inches 24" Junction
+    public static final double      SLIDE_LEVEL_3                   = 16; // inches 12" Junction
+    public static final double      SLIDE_LEVEL_4                   = 28; // inches 24" Junction
+    public static final double      SLIDE_LEVEL_5                   = 38; // inches 33" Junction
 
 
     private static final double     TICKS_PER_MOTOR_REV             = 145.1; // goBilda 1150  //312 RPM  537.7
@@ -105,6 +106,12 @@ public class Slide_Trainer {
 
     public void setSlideLevel4(){
         targetHeight = ( SLIDE_LEVEL_4);
+        liftToTargetHeight(targetHeight,3);
+
+    }
+
+    public void setSlideLevel5(){
+        targetHeight = ( SLIDE_LEVEL_5);
         liftToTargetHeight(targetHeight,3);
 
     }
