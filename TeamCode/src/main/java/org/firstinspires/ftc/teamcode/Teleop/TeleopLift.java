@@ -24,7 +24,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
 @TeleOp(group = "Test")
-//@Disabled
+@Disabled
 public class TeleopLift<slideTrainerState> extends LinearOpMode {
 
     ElapsedTime runtime = new ElapsedTime();
