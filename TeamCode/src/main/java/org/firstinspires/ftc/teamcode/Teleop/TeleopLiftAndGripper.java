@@ -120,6 +120,10 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
                 slideTrainer.setSlideLevel4();
             }
 
+            if (gamepad2.dpad_right) {
+                slideTrainer.setSlideLevel5();
+            }
+
             if (gamepad2.left_trigger > 0.25) {
                 slideTrainer.setSlideLevel2();
             }
