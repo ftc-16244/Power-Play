@@ -29,6 +29,9 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
 
     ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime             teleopTimer                = new ElapsedTime();
+    private double                    TELEOP_TIME_OUT             = 130;
+
     FtcDashboard dashboard;
 
     Slide_Trainer slideTrainer = new Slide_Trainer(this);
@@ -62,7 +65,7 @@ public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
 
         waitForStart();
 
-        while (!isStopRequested()) {
+        while (!isStopRequested() && teleopTimer.time() < TELEOP_TIME_OUT) {
             drive.setWeightedDrivePower(
                     new Pose2d(
                             -gamepad1.left_stick_y,
