@@ -21,10 +21,15 @@
 
 package org.firstinspires.ftc.teamcode.Autonomous;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -33,7 +38,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
-@TeleOp
+@Autonomous
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -56,12 +61,17 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int LEFT = 1; // Tag ID 1 from the 36h11 family
     int MIDDLE = 2; // Tag ID 2 from the 36h11 family
     int RIGHT = 3; // Tag ID 3 from the 36h11 family
+    public static double DISTANCE = 22;
+    public static double LEFTDISTANCE = 30;
+    public static double RIGHTDISTANCE = 30;
 
     AprilTagDetection tagOfInterest = null;
 
     @Override
     public void runOpMode()
     {
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -166,17 +176,35 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         }
 
         if(tagOfInterest == null || tagOfInterest.id == LEFT) {
-            //trajectory for left side
+            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
+                    .forward(DISTANCE)
+                    .build();
+            Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
+                    .strafeLeft(LEFTDISTANCE)
+                    .build();
+            drive.followTrajectory(traj1);
+            drive.followTrajectory(traj1a);
         }
         else if(tagOfInterest.id == MIDDLE) {
-            //trajectory for middle side
+            Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
+                    .forward(DISTANCE)
+                    .build();
+            drive.followTrajectory(traj2);
         }
         else {
-            //trajectory for right side
+            Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
+                    .forward(DISTANCE)
+                    .build();
+            Trajectory traj3a = drive.trajectoryBuilder(new Pose2d())
+                    .strafeRight(RIGHTDISTANCE)
+                    .build();
+            drive.followTrajectory(traj3);
+            drive.followTrajectory(traj3a);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (opModeIsActive()) {sleep(20);}
+        while (!isStopRequested() && opModeIsActive());
+        camera.stopStreaming();
     }
 
     void tagToTelemetry(AprilTagDetection detection)
