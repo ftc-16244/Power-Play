@@ -62,6 +62,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int MIDDLE = 2; // Tag ID 2 from the 36h11 family
     int RIGHT = 3; // Tag ID 3 from the 36h11 family
     public static double DISTANCE = 22;
+    public static double DISTANCE1 = 30;
     public static double LEFTDISTANCE = 30;
     public static double RIGHTDISTANCE = 30;
 
@@ -175,7 +176,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
 
-        if(tagOfInterest == null || tagOfInterest.id == LEFT) {
+        if(tagOfInterest == null){
             Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
                     .forward(DISTANCE)
                     .build();
@@ -184,14 +185,31 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                     .build();
             drive.followTrajectory(traj1);
             drive.followTrajectory(traj1a);
+        } else if(tagOfInterest.id == LEFT) {
+            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
+                    .forward(DISTANCE)
+                    .build();
+            Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
+                    .strafeLeft(LEFTDISTANCE)
+                    .build();
+            Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
+                    .forward(DISTANCE)
+                    .build();
+            Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
+                    .strafeRight(RIGHTDISTANCE)
+                    .build();
+            drive.followTrajectory(traj1);
+            drive.followTrajectory(traj1a);
+            drive.followTrajectory(traj1b);
+            drive.followTrajectory(traj1c);
         }
         else if(tagOfInterest.id == MIDDLE) {
             Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
-                    .forward(DISTANCE)
+                    .forward(DISTANCE1)
                     .build();
             drive.followTrajectory(traj2);
         }
-        else {
+        else if(tagOfInterest.id == RIGHT){
             Trajectory traj3 = drive.trajectoryBuilder(new Pose2d())
                     .forward(DISTANCE)
                     .build();
