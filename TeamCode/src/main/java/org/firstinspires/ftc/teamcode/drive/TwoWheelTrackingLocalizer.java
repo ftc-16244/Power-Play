@@ -35,14 +35,14 @@ import java.util.List;
  */
 public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 8192;
-    public static double WHEEL_RADIUS = 30./25.4; // in
+    public static double WHEEL_RADIUS = 1.0; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
-    public static double PARALLEL_X = -0; // X is the up and down direction
-    public static double PARALLEL_Y = 4; // Y is the strafe direction
+    public static double PARALLEL_X = -2; // X is the up and down direction
+    public static double PARALLEL_Y = 3; // Y is the strafe direction
 
-    public static double PERPENDICULAR_X = -3.2;
-    public static double PERPENDICULAR_Y = 0;
+    public static double PERPENDICULAR_X = -1;
+    public static double PERPENDICULAR_Y = -2.5;
 
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
@@ -60,8 +60,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         this.drive = drive;
         // use the LH endoder for now as parallel, Move to center of robot if it works.
         // forward encoder is now called the perpendicular one.
-        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "Left_front"));
-        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "Right_rear"));
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftFront"));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         parallelEncoder.setDirection(Encoder.Direction.FORWARD);
@@ -99,8 +99,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         //  compensation method
 
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getCorrectedVelocity()),
-                encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity())
+                encoderTicksToInches(parallelEncoder.getRawVelocity()),
+                encoderTicksToInches(perpendicularEncoder.getRawVelocity())
         );//REV encoder mod complete
     }
 }

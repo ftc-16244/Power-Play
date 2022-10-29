@@ -20,7 +20,7 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 537.6;
+    public static final double TICKS_PER_REV = 537.7;
     public static final double MAX_RPM = 312; // gobilda drive motor 19.203:1 ratio
 
     /*
@@ -66,8 +66,8 @@ public class DriveConstants {
      */
     public static double MAX_VEL = 48; // 60 in/sec is the theoretical speed
     public static double MAX_ACCEL = 30;
-    public static double MAX_ANG_VEL = Math.toRadians(60);
-    public static double MAX_ANG_ACCEL = Math.toRadians(60);
+    public static double MAX_ANG_VEL = Math.toRadians(220);
+    public static double MAX_ANG_ACCEL = Math.toRadians(220);
 
 
     public static double encoderTicksToInches(double ticks) {
