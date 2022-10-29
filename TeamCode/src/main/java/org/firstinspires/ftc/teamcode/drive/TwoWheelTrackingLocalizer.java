@@ -44,6 +44,9 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double PERPENDICULAR_X = -1;
     public static double PERPENDICULAR_Y = -2.5;
 
+    public static double X_MULTIPLIER = 0.99;
+    public static double Y_MULTIPLIER = 1.00;
+
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
     // Perpendicular is perpendicular to the forward axis
@@ -60,13 +63,17 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         this.drive = drive;
         // use the LH endoder for now as parallel, Move to center of robot if it works.
         // forward encoder is now called the perpendicular one.
-        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftFront"));
-        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
+        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
+        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
-        parallelEncoder.setDirection(Encoder.Direction.FORWARD);
+        parallelEncoder.setDirection(Encoder.Direction.REVERSE);
         perpendicularEncoder.setDirection(Encoder.Direction.FORWARD);
     }
+
+
+
+
 
     public static double encoderTicksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;
@@ -99,8 +106,8 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
         //  compensation method
 
         return Arrays.asList(
-                encoderTicksToInches(parallelEncoder.getRawVelocity()),
-                encoderTicksToInches(perpendicularEncoder.getRawVelocity())
+                encoderTicksToInches(parallelEncoder.getCorrectedVelocity() * X_MULTIPLIER),
+                encoderTicksToInches(perpendicularEncoder.getCorrectedVelocity() * Y_MULTIPLIER)
         );//REV encoder mod complete
     }
 }
