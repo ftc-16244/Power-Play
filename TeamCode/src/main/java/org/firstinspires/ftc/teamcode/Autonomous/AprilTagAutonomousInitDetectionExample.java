@@ -62,6 +62,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int MIDDLE = 2; // Tag ID 2 from the 36h11 family
     int RIGHT = 3; // Tag ID 3 from the 36h11 family
     public static double DISTANCE = 22;
+    public static double DISTANCE_HALF = DISTANCE/2.0;
     public static double DISTANCE1 = 30;
     public static double LEFTDISTANCE = 30;
     public static double RIGHTDISTANCE = 30;
@@ -193,7 +194,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
                     .strafeLeft(LEFTDISTANCE)
                     .build();
             Trajectory traj1b = drive.trajectoryBuilder(new Pose2d())
-                    .forward(DISTANCE)
+                    .forward(DISTANCE_HALF)
                     .build();
             Trajectory traj1c = drive.trajectoryBuilder(new Pose2d())
                     .strafeRight(RIGHTDISTANCE)
@@ -201,7 +202,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             drive.followTrajectory(traj1);
             drive.followTrajectory(traj1a);
             drive.followTrajectory(traj1b);
-            drive.followTrajectory(traj1c);
+            //drive.followTrajectory(traj1c); // don't strafe right need to stay in the left section
         }
         else if(tagOfInterest.id == MIDDLE) {
             Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
