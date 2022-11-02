@@ -61,11 +61,11 @@ public class Gripper {
     }
 
     //Turner methods
-    public void turnerSetPosition1() throws InterruptedException {
+    public void turnerSetPosition1() {
         turner.setPosition(POS_ONE); // back
     }
 
-    public void turnerSetPosition2() throws InterruptedException {
+    public void turnerSetPosition2() {
         turner.setPosition(POS_TWO);//fwd
     }
 

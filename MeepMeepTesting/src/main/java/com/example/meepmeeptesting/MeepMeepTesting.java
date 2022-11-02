@@ -19,19 +19,8 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 13)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(-34, 61, Math.toRadians(-90)))
-                                .forward(48)
-                                .strafeLeft(12)
-                                .forward(3)
-                                .back(3)
-                                .strafeRight(12)
-                                .turn(Math.toRadians(90))
-                                .back(24)
-                                .forward(24)
-                                .strafeRight(12)
-                                .forward(3)
-                                .back(3)
-                                .strafeLeft(36)
-                                .forward(24)
+                                .forward(30)
+                                .strafeLeft(30)
                                 .build()
                 );
 
@@ -43,13 +32,6 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(30, 30, Math.toRadians(180)))
                                 .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
-                                .forward(30)
-                                .turn(Math.toRadians(90))
                                 .build()
                 );
 
@@ -59,7 +41,7 @@ public class MeepMeepTesting {
 
                 // Add both of our declared bot entities
                 .addEntity(myFirstBot)
-                .addEntity(mySecondBot)
+                //.addEntity(mySecondBot)
                 .start();
     }
 }
