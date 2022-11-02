@@ -177,16 +177,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
 
-        if(tagOfInterest == null){
-            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                    .forward(DISTANCE)
-                    .build();
-            Trajectory traj1a = drive.trajectoryBuilder(new Pose2d())
-                    .strafeLeft(LEFTDISTANCE)
-                    .build();
-            drive.followTrajectory(traj1);
-            drive.followTrajectory(traj1a);
-        } else if(tagOfInterest.id == LEFT) {
+        if(tagOfInterest == null||tagOfInterest.id == LEFT) {
             Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
                     .forward(DISTANCE)
                     .build();
