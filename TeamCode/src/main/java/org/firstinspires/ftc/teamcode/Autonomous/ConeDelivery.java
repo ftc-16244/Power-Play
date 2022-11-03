@@ -189,17 +189,18 @@ public class ConeDelivery extends LinearOpMode
         }
 
         if(tagOfInterest.id == LEFT) {
-            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
+            Trajectory traj1 = drive.trajectoryBuilder(new Pose2d()) // this is the 0,0 pose start point
                     .forward(33)
                     .back(5)
                     .addTemporalMarker(0.5,()->{slideTrainer.setSlideLevel5();})
                     .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
                     .build();
-            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
+            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())  // the pose is the end of the last trajectory don't put new Pose2d here.....
                     .strafeRight(34)
                     .build();
             Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
                     .forward(4)
+                    // need a pause here before releasing the cone....adding time doesn't seem to work.
                     .addTemporalMarker(6,()->{gripper.rollersInit();})
                     .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
                     .build();
