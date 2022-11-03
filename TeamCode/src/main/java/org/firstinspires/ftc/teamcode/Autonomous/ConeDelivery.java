@@ -190,17 +190,28 @@ public class ConeDelivery extends LinearOpMode
 
         if(tagOfInterest.id == LEFT) {
             Trajectory traj1 = drive.trajectoryBuilder(new Pose2d())
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel5();})
+                    .forward(33)
+                    .back(5)
+                    .addTemporalMarker(0.5,()->{slideTrainer.setSlideLevel5();})
                     .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
-                    .forward(30)
                     .build();
-            Trajectory traj2 = drive.trajectoryBuilder(new Pose2d())
-                    .strafeRight(30)
-                    .addTemporalMarker(2,()->{gripper.rollersInit();})
+            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
+                    .strafeRight(34)
+                    .build();
+            Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
+                    .forward(4)
+                    .addTemporalMarker(6,()->{gripper.rollersInit();})
+                    .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
+                    .build();
+            Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
+                    .strafeLeft(40)
+                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .build();
 
             drive.followTrajectory(traj1);
             drive.followTrajectory(traj2);
+            drive.followTrajectory(traj3);
+            //drive.followTrajectory(traj4);
 
         }
         else if(tagOfInterest.id == MIDDLE) {
