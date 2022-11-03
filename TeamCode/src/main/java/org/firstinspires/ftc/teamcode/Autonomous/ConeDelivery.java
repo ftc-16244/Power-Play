@@ -200,11 +200,13 @@ public class ConeDelivery extends LinearOpMode
                     .build();
             Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
                     .forward(4)
-                    // need a pause here before releasing the cone....adding time doesn't seem to work.
-                    .addTemporalMarker(6,()->{gripper.rollersInit();})
-                    .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(3, () -> {})
                     .build();
             Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
+                    .addTemporalMarker(2,()->{gripper.rollersInit();})
+                    .addTemporalMarker(6,()->{gripper.turnerSetPosition1();})
+                    .build();
+            Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
                     .strafeLeft(40)
                     .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .build();
@@ -212,7 +214,7 @@ public class ConeDelivery extends LinearOpMode
             drive.followTrajectory(traj1);
             drive.followTrajectory(traj2);
             drive.followTrajectory(traj3);
-            //drive.followTrajectory(traj4);
+            drive.followTrajectory(traj4);
 
         }
         else if(tagOfInterest.id == MIDDLE) {
