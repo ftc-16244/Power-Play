@@ -191,22 +191,24 @@ public class ConeDelivery extends LinearOpMode
         if(tagOfInterest.id == LEFT) {
             Trajectory traj1 = drive.trajectoryBuilder(new Pose2d()) // this is the 0,0 pose start point
                     .forward(33)
-                    .back(5)
                     .addTemporalMarker(0.5,()->{slideTrainer.setSlideLevel5();})
                     .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
                     .build();
-            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())  // the pose is the end of the last trajectory don't put new Pose2d here.....
+            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
+                    .back(5)
+                    .build();
+            Trajectory traj3 = drive.trajectoryBuilder(traj2.end())  // the pose is the end of the last trajectory don't put new Pose2d here.....
                     .strafeRight(34)
                     .build();
-            Trajectory traj3 = drive.trajectoryBuilder(traj2.end())
+            Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
                     .forward(4)
                     .addTemporalMarker(3, () -> {})
                     .build();
-            Trajectory traj4 = drive.trajectoryBuilder(traj3.end())
+            Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
                     .addTemporalMarker(2,()->{gripper.rollersInit();})
                     .addTemporalMarker(6,()->{gripper.turnerSetPosition1();})
                     .build();
-            Trajectory traj5 = drive.trajectoryBuilder(traj4.end())
+            Trajectory traj6 = drive.trajectoryBuilder(traj5.end())
                     .strafeLeft(40)
                     .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .build();
@@ -215,6 +217,8 @@ public class ConeDelivery extends LinearOpMode
             drive.followTrajectory(traj2);
             drive.followTrajectory(traj3);
             drive.followTrajectory(traj4);
+            drive.followTrajectory(traj5);
+
 
         }
         else if(tagOfInterest.id == MIDDLE) {
