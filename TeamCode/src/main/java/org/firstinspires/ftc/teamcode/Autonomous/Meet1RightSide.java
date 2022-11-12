@@ -22,10 +22,9 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -37,12 +36,12 @@ import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.ArrayList;
 
 @Autonomous
-public class Test extends LinearOpMode
+@Disabled
+public class Meet1RightSide extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
@@ -194,28 +193,66 @@ public class Test extends LinearOpMode
             drive.setPoseEstimate(startPose);
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(33)
+                    .forward(28.8)
                     .waitSeconds(1)
-                    .back(5)
-                    .addTemporalMarker(3,()->{slideTrainer.setSlideLevel5();})
-                    .addTemporalMarker(5,()->{gripper.turnerSetPosition2();})
-                    .strafeRight(34)
+                    .strafeLeft(36.5)
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
                     .waitSeconds(1)
-                    .forward(4)
-                    //.waitSeconds(2)
-                    //.addTemporalMarker(6,()->{gripper.rollersInit();})
-                    //.addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
-                    //.strafeLeft(40)
-                    //.addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .forward(6)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .addTemporalMarker(8,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(9,()->{slideTrainer.setSlideLevel1();})
+                    .back(6)
+                    .strafeRight(12)
                     .build();
 
             drive.followTrajectorySequence(trajSeq);
         }
         else if(tagOfInterest.id == MIDDLE) {
+            Pose2d startPose = new Pose2d(0, 0, 0);
+            drive.setPoseEstimate(startPose);
 
+            TrajectorySequence trajSeq2 = drive.trajectorySequenceBuilder(startPose)
+                    .forward(28.8)
+                    .waitSeconds(1)
+                    .strafeLeft(36.5)
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
+                    .waitSeconds(1)
+                    .forward(6)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .addTemporalMarker(8,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(9,()->{slideTrainer.setSlideLevel1();})
+                    .back(6)
+                    .strafeRight(30)
+                    .build();
+
+            drive.followTrajectorySequence(trajSeq2);
         }
         else if(tagOfInterest.id == RIGHT){
+            Pose2d startPose = new Pose2d(0, 0, 0);
+            drive.setPoseEstimate(startPose);
 
+            TrajectorySequence trajSeq3 = drive.trajectorySequenceBuilder(startPose)
+                    .forward(28.8)
+                    .waitSeconds(1)
+                    .strafeLeft(36.5)
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
+                    .waitSeconds(1)
+                    .forward(6)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .addTemporalMarker(8,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(9,()->{slideTrainer.setSlideLevel1();})
+                    .back(6)
+                    .strafeRight(48.5)
+                    .build();
+
+            drive.followTrajectorySequence(trajSeq3);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
