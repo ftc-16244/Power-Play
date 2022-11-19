@@ -204,21 +204,25 @@ public class Test extends LinearOpMode
             Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
 
             drive.setPoseEstimate(startPose);
-
-            Trajectory traj1 = drive.trajectoryBuilder(startPose)
-                    //.splineTo(new Vector2d(-36, -30), 90)
-                    .lineToLinearHeading(new Pose2d(-36, -40,Math.toRadians(90)))
-                    //.lineTo(new Vector2d(-36, -26))
+            TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+                    .lineToLinearHeading(new Pose2d(-36, -20,Math.toRadians(0)))
+                    .waitSeconds(0.5)
+                    .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(0)))
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
+                    .waitSeconds(1)
+                    .forward(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .waitSeconds(1)
+                    .back(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(11,()->{slideTrainer.setSlideLevel1();})
 
                     .build();
-            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
-                    .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(90)))
-                    //.lineTo(new Vector2d(-36, -26))
+            drive.followTrajectorySequence(traj1);
 
-                    .build();
-
-            drive.followTrajectory(traj1);
-            drive.followTrajectory(traj2);
         }
         else if(tagOfInterest.id == MIDDLE) {
 
