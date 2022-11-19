@@ -22,6 +22,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -190,26 +191,34 @@ public class Test extends LinearOpMode
         }
 
         if(tagOfInterest.id == LEFT) {
-            Pose2d startPose = new Pose2d(0, 0, 0);
+            //Pose2d startPose = new Pose2d(-36, -50, 0);
+            //drive.setPoseEstimate(startPose);
+
+            //Trajectory traj1 = drive.trajectoryBuilder(startPose)
+            //        .splineTo(new Vector2d(20, 9), Math.toRadians(45))
+            //        .build();
+
+            //drive.followTrajectory(traj1);
+
+            // We want to start the bot at x: 10, y: -8, heading: 90 degrees
+            Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
+
             drive.setPoseEstimate(startPose);
 
-            TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                    .forward(33)
-                    .waitSeconds(1)
-                    .back(5)
-                    .addTemporalMarker(3,()->{slideTrainer.setSlideLevel5();})
-                    .addTemporalMarker(5,()->{gripper.turnerSetPosition2();})
-                    .strafeRight(34)
-                    .waitSeconds(1)
-                    .forward(4)
-                    //.waitSeconds(2)
-                    //.addTemporalMarker(6,()->{gripper.rollersInit();})
-                    //.addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
-                    //.strafeLeft(40)
-                    //.addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+            Trajectory traj1 = drive.trajectoryBuilder(startPose)
+                    //.splineTo(new Vector2d(-36, -30), 90)
+                    .lineToLinearHeading(new Pose2d(-36, -40,Math.toRadians(90)))
+                    //.lineTo(new Vector2d(-36, -26))
+
+                    .build();
+            Trajectory traj2 = drive.trajectoryBuilder(traj1.end())
+                    .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(90)))
+                    //.lineTo(new Vector2d(-36, -26))
+
                     .build();
 
-            drive.followTrajectorySequence(trajSeq);
+            drive.followTrajectory(traj1);
+            drive.followTrajectory(traj2);
         }
         else if(tagOfInterest.id == MIDDLE) {
 
