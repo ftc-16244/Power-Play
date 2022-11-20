@@ -19,15 +19,17 @@ public class Gripper2 {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants for rollers
-    public static final double      GRIPPER_LEFT_INITIAL    = 0.55; // not gripped
-    public static final double      GRIPPER_LEFT_FINAL      = 0.6 ; // cone gripped
-    public static final double      GRIPPER_RIGHT_INITIAL   = 0.63 ; // not gripped
-    public static final double      GRIPPER_RIGHT_FINAL     = 0.58; // gripped
+    public static final double      GRIPPER_LEFT_INITIAL    = 0.5; // not gripped
+    public static final double      GRIPPER_LEFT_OPEN       = 0.60; // not gripped
+    public static final double      GRIPPER_LEFT_CLOSED      = 0.40 ; // cone gripped
+    public static final double      GRIPPER_RIGHT_INITIAL   = 0.50 ; // not gripped
+    public static final double      GRIPPER_RIGHT_OPEN      = 0.40; // not gripped
+    public static final double      GRIPPER_RIGHT_CLOSED     = 0.60; // gripped
 
 
     //Constants for turnythingy
-    public static final double      POS_ONE       = 0.17; // facing to the back
-    public static final double      POS_TWO      = 0.83; // facing to the front
+    public static final double      BACK       = 0.17; // facing to the back
+    public static final double      FRONT      = 0.83; // facing to the front
 
     LinearOpMode opmode;
     // Constructor with opmode so we can access opmode features
@@ -55,22 +57,27 @@ public class Gripper2 {
 
     //Turner methods
     public void turnerSetPosition1() {
-        turner.setPosition(POS_ONE); // back
+        turner.setPosition(BACK); // back
     }
 
     public void turnerSetPosition2() {
-        turner.setPosition(POS_TWO);//fwd
+        turner.setPosition(FRONT);//fwd
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Auto Only for roller suctioning and removing.
-    public void rollersInit(){
+    // Gripper init is at half way. There is also open and closed
+    public void gripperInit(){
         gripperLeft.setPosition(GRIPPER_LEFT_INITIAL);
         gripperRight.setPosition(GRIPPER_RIGHT_INITIAL);
     }
-    public void rollersFinal(){
-        gripperLeft.setPosition(GRIPPER_LEFT_FINAL);
-        gripperRight.setPosition(GRIPPER_RIGHT_FINAL);
+    public void gripperClosed(){
+        gripperLeft.setPosition(GRIPPER_LEFT_CLOSED);
+        gripperRight.setPosition(GRIPPER_RIGHT_CLOSED);
+    }
+
+    public void gripperOpen(){
+        gripperLeft.setPosition(GRIPPER_LEFT_OPEN);
+        gripperRight.setPosition(GRIPPER_RIGHT_OPEN);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
