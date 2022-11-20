@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 @Config
 @TeleOp(group = "Test")
 
-class Teleop_Robot_2 extends LinearOpMode {
+public class Teleop_Robot_2 extends LinearOpMode {
 
 
     ElapsedTime runtime = new ElapsedTime();
@@ -56,6 +56,7 @@ class Teleop_Robot_2 extends LinearOpMode {
 
         gripper.init(hardwareMap);
         gripper.turnerSetPosition1();//back
+        gripper.gripperOpen(); // for teleop start with the gripper open. for Auto is needs to be closed to hold the cone
         //gripper.rollersInit();
 
         //slideTrainer.slideMechanicalReset(); // run reset on init to make sure slide is retracted all the way\
