@@ -17,7 +17,7 @@ public class Slide_Trainer2 {
     //Define Hardware Objects
 
 
-    public  DcMotorEx       slidemotor;
+    public  DcMotorEx       slidemotor;  // config name is "slideMotor"
 
     Telemetry       telemetry;
     LinearOpMode    opmode; // need content from Linear opmodes here. Elapsed time mainly

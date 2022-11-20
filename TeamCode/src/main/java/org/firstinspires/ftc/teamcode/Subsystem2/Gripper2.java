@@ -10,7 +10,7 @@ public class Gripper2 {
 
     //Define Hardware Objects
     public Servo            turner             = null;
-    public Servo            gripperLeft        = null;
+    public Servo            gripperLeft        = null; //configis the smae name
     public Servo            gripperRight       = null;
     public VoltageSensor    voltSensor         = null;
 
@@ -20,11 +20,11 @@ public class Gripper2 {
 
     //Constants for rollers
     public static final double      GRIPPER_LEFT_INITIAL    = 0.5; // not gripped
-    public static final double      GRIPPER_LEFT_OPEN       = 0.60; // not gripped
-    public static final double      GRIPPER_LEFT_CLOSED      = 0.40 ; // cone gripped
+    public static final double      GRIPPER_LEFT_OPEN       = 0.20; // not gripped
+    public static final double      GRIPPER_LEFT_CLOSED      = 0.6 ; // cone gripped
     public static final double      GRIPPER_RIGHT_INITIAL   = 0.50 ; // not gripped
-    public static final double      GRIPPER_RIGHT_OPEN      = 0.40; // not gripped
-    public static final double      GRIPPER_RIGHT_CLOSED     = 0.60; // gripped
+    public static final double      GRIPPER_RIGHT_OPEN      = 0.75; // not gripped
+    public static final double      GRIPPER_RIGHT_CLOSED     = 0.40; // gripped
 
 
     //Constants for turnythingy
