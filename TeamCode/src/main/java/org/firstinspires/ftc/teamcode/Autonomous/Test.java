@@ -218,10 +218,28 @@ public class Test extends LinearOpMode
                     .back(8)
                     .waitSeconds(1)
                     .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
-                    .addTemporalMarker(11,()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(11,()->{slideTrainer.setSlideLevel3();})
 
                     .build();
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                    .strafeRight(11)
+                    .waitSeconds(0.5)
+                    .back(22)
+                    .addTemporalMarker(3,()->{slideTrainer.setSlideLevel2();})
+                    .addTemporalMarker(4,()->{gripper.rollersFinal();})
+                    .build();
+
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
+                    .addTemporalMarker(0.25,()->{slideTrainer.setSlideLevel5();})
+                    .forward(22)
+                    .strafeLeft(11)
+                    .build();
+
             drive.followTrajectorySequence(traj1);
+            drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj3);
+
+
 
         }
         else if(tagOfInterest.id == MIDDLE) {
