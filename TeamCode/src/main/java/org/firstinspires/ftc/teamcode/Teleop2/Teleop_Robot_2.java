@@ -115,8 +115,8 @@ public class Teleop_Robot_2 extends LinearOpMode {
             }
 
             if (gamepad1.back) {
-                slideTrainer.slideMechanicalReset();
-                slideTrainer.targetHeight = 0;
+                //slideTrainer.slideMechanicalReset();
+                //slideTrainer.targetHeight = 0;
             }
             if (gamepad1.left_trigger > 0.25) {
                 gripper.gripperOpen();
@@ -153,6 +153,11 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
             if (gamepad2.right_trigger > 0.25) {
                 slideTrainer.setSlideLevel1();
+            }
+
+            if (gamepad2.back) {
+                slideTrainer.slideMechanicalReset();
+                slideTrainer.targetHeight = 0;
             }
 
 

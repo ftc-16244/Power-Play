@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,7 +18,8 @@ public class Slide_Trainer2 {
     //Define Hardware Objects
 
 
-    public  DcMotorEx       slidemotor;  // config name is "slideMotor"
+    public  DcMotorEx       slidemotorback;  // config name is "slideMotor"
+    public  DcMotorEx       slidemotorfront;  // config name is "slideMotor"
 
     Telemetry       telemetry;
     LinearOpMode    opmode; // need content from Linear opmodes here. Elapsed time mainly
@@ -26,9 +28,9 @@ public class Slide_Trainer2 {
 
     //Constants Lift
     public  static double           SLIDELIFTSPEED                  = 1.0; //
-    public static  double           SLIDELOWERSPEED                 = -0.8; // use the LOAD instead of down. Zero pushes wheels off the mat
+    public static  double           SLIDERESETSPEED                 = -0.2; // use the LOAD instead of down. Zero pushes wheels off the mat
     public static final double      SLIDE_LEVEL_1                   = 0; // inches Ground Level
-    public static final double      SLIDE_LEVEL_2                   = 7; // inches Cone Loading Level
+    public static final double      SLIDE_LEVEL_2                   = 3; // inches Cone Loading Level
     public static final double      SLIDE_LEVEL_3                   = 16; // inches 12" Junction
     public static final double      SLIDE_LEVEL_4                   = 28; // inches 24" Junction
     public static final double      SLIDE_LEVEL_5                   = 38; // inches 33" Junction
@@ -59,16 +61,27 @@ public class Slide_Trainer2 {
     public void init(HardwareMap hwMap)  {
 
         // Initialize the slide motor
-        slidemotor = hwMap.get(DcMotorEx.class,"slideMotor");
-        slidemotor.setDirection(DcMotorEx.Direction.REVERSE);
+        slidemotorback = hwMap.get(DcMotorEx.class,"slideMotorBack");
+        slidemotorfront = hwMap.get(DcMotorEx.class,"slideMotorFront");
+        slidemotorback.setDirection(DcMotorEx.Direction.REVERSE);
+        slidemotorfront.setDirection(DcMotorEx.Direction.REVERSE);
 
-        PIDFCoefficients pidfOrig = slidemotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        PIDFCoefficients pidfOrig = slidemotorback.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
         // change coefficients using methods included with DcMotorEx class.
-        PIDFCoefficients pidSlide_New = new PIDFCoefficients(SLIDE_NEW_P, SLIDE_NEW_I, SLIDE_NEW_D, SLIDE_NEW_F);
-        slidemotor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidSlide_New);
+        //PIDFCoefficients pidSlide_New = new PIDFCoefficients(SLIDE_NEW_P, SLIDE_NEW_I, SLIDE_NEW_D, SLIDE_NEW_F);
+        //slidemotorback.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidSlide_New);
+        //slidemotorfront.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidSlide_New);
         // re-read coefficients and verify change.
-        PIDFCoefficients pidModified = slidemotor.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
-        //slideTrainer.setSlideLow(); comment out to leave in IDLE state if desired.
+        //PIDFCoefficients pidModifiedback = slidemotorback.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        //PIDFCoefficients pidModifiedfront = slidemotorfront.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        //slidemotorback.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidSlide_New);
+        //slidemotorfront.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidSlide_New);
+
+
+        slidemotorback.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        slidemotorfront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        slidemotorback.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        slidemotorfront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
     }
 
@@ -77,7 +90,7 @@ public class Slide_Trainer2 {
     // simple getter and setter methods for use in state machines
     public double getSlidePos(){
         double slidePos;
-        slidePos = slidemotor.getCurrentPosition()/ TICKS_PER_LIFT_IN; //returns in inches
+        slidePos = slidemotorback.getCurrentPosition()/ TICKS_PER_LIFT_IN; //returns in inches
         return  slidePos;
     }
 
@@ -114,24 +127,29 @@ public class Slide_Trainer2 {
 
     public void slideMechanicalReset(){
 
-        slidemotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // need to swich off encoder to run with a timer
-        slidemotor.setPower(SLIDELOWERSPEED);
+        slidemotorback.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // need to swich off encoder to run with a timer
+        slidemotorfront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); // need to swich off encoder to run with a timer
+        slidemotorback.setPower(SLIDERESETSPEED);
+        slidemotorfront.setPower(SLIDERESETSPEED);
         runtime.reset();
         // opmode is not active during init so take that condition out of the while loop
         // reset for time allowed or until the limit/ touch sensor is pressed.
-        while (runtime.seconds() < 3.0) {
+        while (runtime.seconds() < 2.0) {
 
             //Time wasting loop so slide can retract. Loop ends when time expires or tiuch sensor is pressed
         }
-        slidemotor.setPower(0);
+        slidemotorback.setPower(0);
+        slidemotorfront.setPower(0);
         runtime.reset();
         while ((runtime.seconds() < 0.25)) {
 
             //Time wasting loop to let spring relax
         }
         // set everything back the way is was before reset so encoders can be used
-        slidemotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        slidemotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        slidemotorback.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        slidemotorfront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        slidemotorback.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        slidemotorfront.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         //slideTrainerState = SlideTrainerState.IDLE;// once this is done we are at zero power or idling.
 
     }
@@ -149,13 +167,22 @@ public class Slide_Trainer2 {
 
             newTargetHeight = (int)(height *  TICKS_PER_LIFT_IN);
             // Set the target now that is has been calculated
-            slidemotor.setTargetPosition(newTargetHeight);
+            slidemotorback.setTargetPosition(newTargetHeight);
+            slidemotorfront.setTargetPosition(newTargetHeight);
             // Turn On RUN_TO_POSITION
-            slidemotor.setPower(Math.abs(SLIDELIFTSPEED));
+            slidemotorback.setPower(Math.abs(SLIDELIFTSPEED));
+            slidemotorfront.setPower(Math.abs(SLIDELIFTSPEED));
             // reset the timeout time and start motion.
             runtime.reset();
-            slidemotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slidemotorback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slidemotorfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (opmode.opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) && slidemotorback.isBusy() && slidemotorfront.isBusy()) {
+                // holds up execution to let the slide go up to the right place
 
+            }
+            //slidemotorback.setPower(Math.abs(0));
+            //slidemotorfront.setPower(Math.abs(0));
 
         }
 
