@@ -191,16 +191,6 @@ public class Test extends LinearOpMode
         }
 
         if(tagOfInterest.id == LEFT) {
-            //Pose2d startPose = new Pose2d(-36, -50, 0);
-            //drive.setPoseEstimate(startPose);
-
-            //Trajectory traj1 = drive.trajectoryBuilder(startPose)
-            //        .splineTo(new Vector2d(20, 9), Math.toRadians(45))
-            //        .build();
-
-            //drive.followTrajectory(traj1);
-
-            // We want to start the bot at x: 10, y: -8, heading: 90 degrees
             Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
 
             drive.setPoseEstimate(startPose);
@@ -230,23 +220,129 @@ public class Test extends LinearOpMode
                     .build();
 
             TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                    .addTemporalMarker(0.25,()->{slideTrainer.setSlideLevel5();})
+                    .waitSeconds(1)
+                    .addTemporalMarker(1.25,()->{slideTrainer.setSlideLevel5();})
                     .forward(22)
-                    .strafeLeft(11)
+                    .strafeLeft(12)
+                    .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
+                    .forward(8)
+                    .addTemporalMarker(5,()->{gripper.rollersInit();})
+                    .back(8)
+                    .addTemporalMarker(7,()->{gripper.turnerSetPosition1();})
+                    .strafeRight(11)
+                    .addTemporalMarker(8,()->{slideTrainer.setSlideLevel1();})
+                    .back(22)
+
+
                     .build();
+
 
             drive.followTrajectorySequence(traj1);
             drive.followTrajectorySequence(traj2);
             drive.followTrajectorySequence(traj3);
 
-
-
+   
         }
         else if(tagOfInterest.id == MIDDLE) {
+            Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
 
+            drive.setPoseEstimate(startPose);
+            TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+                    .lineToLinearHeading(new Pose2d(-36, -20,Math.toRadians(0)))
+                    .waitSeconds(0.5)
+                    .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(0)))
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
+                    .waitSeconds(1)
+                    .forward(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .waitSeconds(1)
+                    .back(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(11,()->{slideTrainer.setSlideLevel3();})
+
+                    .build();
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                    .strafeRight(11)
+                    .waitSeconds(0.5)
+                    .back(22)
+                    .addTemporalMarker(3,()->{slideTrainer.setSlideLevel2();})
+                    .addTemporalMarker(4,()->{gripper.rollersFinal();})
+                    .build();
+
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
+                    .waitSeconds(1)
+                    .addTemporalMarker(1.25,()->{slideTrainer.setSlideLevel5();})
+                    .forward(22)
+                    .strafeLeft(12)
+                    .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
+                    .forward(8)
+                    .addTemporalMarker(5,()->{gripper.rollersInit();})
+                    .back(7)
+                    .addTemporalMarker(7,()->{gripper.turnerSetPosition1();})
+                    .strafeRight(11)
+                    .addTemporalMarker(8,()->{slideTrainer.setSlideLevel1();})
+
+
+                    .build();
+
+
+            drive.followTrajectorySequence(traj1);
+            drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj3);
         }
         else if(tagOfInterest.id == RIGHT){
+            Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
 
+            drive.setPoseEstimate(startPose);
+            TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+                    .lineToLinearHeading(new Pose2d(-36, -20,Math.toRadians(0)))
+                    .waitSeconds(0.5)
+                    .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(0)))
+                    .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
+                    .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
+                    .waitSeconds(1)
+                    .forward(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(7,()->{gripper.rollersInit();})
+                    .waitSeconds(1)
+                    .back(8)
+                    .waitSeconds(1)
+                    .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
+                    .addTemporalMarker(11,()->{slideTrainer.setSlideLevel3();})
+
+                    .build();
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                    .strafeRight(11)
+                    .waitSeconds(0.5)
+                    .back(22)
+                    .addTemporalMarker(3,()->{slideTrainer.setSlideLevel2();})
+                    .addTemporalMarker(4,()->{gripper.rollersFinal();})
+                    .build();
+
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
+                    .waitSeconds(1)
+                    .addTemporalMarker(1.25,()->{slideTrainer.setSlideLevel5();})
+                    .forward(22)
+                    .strafeLeft(12)
+                    .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
+                    .forward(8)
+                    .addTemporalMarker(5,()->{gripper.rollersInit();})
+                    .back(8)
+                    .addTemporalMarker(7,()->{gripper.turnerSetPosition1();})
+                    .strafeRight(13)
+                    .addTemporalMarker(8,()->{slideTrainer.setSlideLevel1();})
+                    .forward(25)
+
+
+                    .build();
+
+
+            drive.followTrajectorySequence(traj1);
+            drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj3);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
