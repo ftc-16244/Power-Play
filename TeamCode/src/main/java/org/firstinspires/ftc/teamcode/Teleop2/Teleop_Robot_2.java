@@ -87,7 +87,7 @@ public class Teleop_Robot_2 extends LinearOpMode {
           slidePosition = slideTrainer.getSlidePos();
 
 
-          if (slidePosition <= slideTrainer.SLIDE_LEVEL_3){
+          if (slidePosition <= slideTrainer.TURNER_MIN_HEIGHT_2_ROTATE){
              turnerState = TurnerState.DISABLED;
 
           }
