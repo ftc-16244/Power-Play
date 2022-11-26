@@ -241,7 +241,7 @@ public class Test extends LinearOpMode
             drive.followTrajectorySequence(traj2);
             drive.followTrajectorySequence(traj3);
 
-   
+
         }
         else if(tagOfInterest.id == MIDDLE) {
             Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
