@@ -10,8 +10,9 @@ public class Gripper2 {
 
     //Define Hardware Objects
     public Servo            turner             = null;
-    public Servo            gripperLeft        = null; //configis the smae name
+    public Servo            gripperLeft        = null; //configis the same name
     public Servo            gripperRight       = null;
+    public Servo            gripperTop         = null;
     public VoltageSensor    voltSensor         = null;
 
     // Need some features from the Linear Opmode to make the lift work
@@ -25,6 +26,10 @@ public class Gripper2 {
     public static final double      GRIPPER_RIGHT_INITIAL   = 0.50 ; // not gripped
     public static final double      GRIPPER_RIGHT_OPEN      = 0.75; // not gripped
     public static final double      GRIPPER_RIGHT_CLOSED     = 0.40; // gripped
+
+    public static final double      GRIPPER_TOP_INITIAL    = 0.5; // should be horizontal at init
+    public static final double      GRIPPER_TOP_OPEN       = 0.20; // just above cone on ground
+    public static final double      GRIPPER_TOP_CLOSED      = 0.6 ; // cone pulled in for gripper
 
 
     //Constants for turnythingy
@@ -42,16 +47,20 @@ public class Gripper2 {
         voltSensor = hwMap.voltageSensor.get("Expansion Hub 2");
 
         // Initialize tuner the servo that rotates the cone capture bucket
-        turner = hwMap.get(Servo.class,"turner");
+        turner = hwMap.get(Servo.class,"turner");// port 4
+        //turner.setPosition(BACK);
 
+        // Initialize the left gripper
+        gripperLeft = hwMap.get(Servo.class,"gripperLeft"); //port 0
 
-        // Initialize the roller one
-        gripperLeft = hwMap.get(Servo.class,"gripperLeft");
+        // Initialize the right gripper
+        gripperRight = hwMap.get(Servo.class,"gripperRight"); // port 2
 
-        // Initialize the roller two
-        gripperRight = hwMap.get(Servo.class,"gripperRight");
+        // Initialize the top grab arm
+        gripperTop = hwMap.get(Servo.class,"gripperTop");//port 5
 
-        // pre-position servos
+        // pre-position turner servo
+
 
     }
 
@@ -69,15 +78,18 @@ public class Gripper2 {
     public void gripperInit(){
         gripperLeft.setPosition(GRIPPER_LEFT_INITIAL);
         gripperRight.setPosition(GRIPPER_RIGHT_INITIAL);
+        gripperTop.setPosition(GRIPPER_TOP_INITIAL);
     }
     public void gripperClosed(){
         gripperLeft.setPosition(GRIPPER_LEFT_CLOSED);
         gripperRight.setPosition(GRIPPER_RIGHT_CLOSED);
+        gripperTop.setPosition(GRIPPER_TOP_CLOSED);
     }
 
     public void gripperOpen(){
         gripperLeft.setPosition(GRIPPER_LEFT_OPEN);
         gripperRight.setPosition(GRIPPER_RIGHT_OPEN);
+        gripperTop.setPosition(GRIPPER_TOP_OPEN);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

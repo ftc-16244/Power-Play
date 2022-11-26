@@ -27,18 +27,19 @@ public class Slide_Trainer2 {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants Lift
-    public  static double           SLIDELIFTSPEED                  = 1.0; //
-    public static  double           SLIDERESETSPEED                 = -0.2; // use the LOAD instead of down. Zero pushes wheels off the mat
-    public static final double      SLIDE_LEVEL_1                   = 0; // inches Ground Level
-    public static final double      SLIDE_LEVEL_2                   = 3; // inches Cone Loading Level
-    public static final double      SLIDE_LEVEL_3                   = 16; // inches 12" Junction
-    public static final double      SLIDE_LEVEL_4                   = 28; // inches 24" Junction
-    public static final double      SLIDE_LEVEL_5                   = 38; // inches 33" Junction
+    public  static double           SLIDELIFTSPEED                  = 0.70; //
+    public static  double           SLIDERESETSPEED                 = -0.2; //
+    public static final double      SLIDE_LEVEL_1                   = 0; // inches Load cone level
+    public static final double      SLIDE_LEVEL_2                   = 2; // inches ground junction
+    public static final double      SLIDE_LEVEL_3                   = 13; // inches 12" Junction
+    public static final double      SLIDE_LEVEL_4                   = 23; // inches 24" Junction
+    public static final double      SLIDE_LEVEL_5                   = 32; // inches 33" Junction
+    public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
 
-
+    private static final double     LIFT_HEIGHT_CORRECTION_FACTOR   =   1.13;
     private static final double     TICKS_PER_MOTOR_REV             = 145.1; // goBilda 1150  //312 RPM  537.7
     private static final double     PULLEY_DIA                      = 40; // milimeters
-    private static final double     SLIDE_LIFT_DISTANCE_PER_REV     = PULLEY_DIA * Math.PI / 25.4;
+    private static final double     SLIDE_LIFT_DISTANCE_PER_REV     = PULLEY_DIA * Math.PI / (25.4*LIFT_HEIGHT_CORRECTION_FACTOR);
     private static final double     TICKS_PER_LIFT_IN               = TICKS_PER_MOTOR_REV / SLIDE_LIFT_DISTANCE_PER_REV;
 
     public static double            SLIDE_NEW_P                     = 10.0; // 2.5 default
