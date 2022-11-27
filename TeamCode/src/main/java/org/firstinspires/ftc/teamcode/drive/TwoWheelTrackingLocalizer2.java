@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.localization.TwoTrackingWheelLocalizer;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.util.Encoder;
 
 import java.util.Arrays;
@@ -33,9 +32,9 @@ import java.util.List;
  *    \--------------/
  *
  */
-public class TwoWheelTrackingLocalizerSubsystem2 extends TwoTrackingWheelLocalizer {
+public class TwoWheelTrackingLocalizer2 extends TwoTrackingWheelLocalizer {
     public static double TICKS_PER_REV = 8192;
-    public static double WHEEL_RADIUS = 1.0; // in
+    public static double WHEEL_RADIUS = 30./25.4; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
     public static double PARALLEL_X = -2; // X is the up and down direction
@@ -54,7 +53,7 @@ public class TwoWheelTrackingLocalizerSubsystem2 extends TwoTrackingWheelLocaliz
 
     private SampleMecanumDrive drive;
 
-    public TwoWheelTrackingLocalizerSubsystem2(HardwareMap hardwareMap, SampleMecanumDrive drive) {
+    public TwoWheelTrackingLocalizer2(HardwareMap hardwareMap, SampleMecanumDrive drive) {
         super(Arrays.asList(
                 new Pose2d(PARALLEL_X, PARALLEL_Y, 0),
                 new Pose2d(PERPENDICULAR_X, PERPENDICULAR_Y, Math.toRadians(90))
@@ -68,7 +67,7 @@ public class TwoWheelTrackingLocalizerSubsystem2 extends TwoTrackingWheelLocaliz
 
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
         parallelEncoder.setDirection(Encoder.Direction.REVERSE);
-        perpendicularEncoder.setDirection(Encoder.Direction.FORWARD);
+        perpendicularEncoder.setDirection(Encoder.Direction.REVERSE);//flip on robot 2
     }
 
 
