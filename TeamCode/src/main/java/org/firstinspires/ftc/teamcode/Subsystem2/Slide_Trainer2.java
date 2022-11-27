@@ -33,7 +33,7 @@ public class Slide_Trainer2 {
     public static final double      SLIDE_LEVEL_2                   = 2; // inches ground junction
     public static final double      SLIDE_LEVEL_3                   = 13; // inches 12" Junction
     public static final double      SLIDE_LEVEL_4                   = 23; // inches 24" Junction
-    public static final double      SLIDE_LEVEL_5                   = 32; // inches 33" Junction
+    public static final double      SLIDE_LEVEL_5                   = 32.5; // inches 33" Junction
     public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
 
     private static final double     LIFT_HEIGHT_CORRECTION_FACTOR   =   1.13;
@@ -177,11 +177,11 @@ public class Slide_Trainer2 {
             runtime.reset();
             slidemotorback.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             slidemotorfront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            while (opmode.opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) && slidemotorback.isBusy() && slidemotorfront.isBusy()) {
+           // while (opmode.opModeIsActive() &&
+             //       (runtime.seconds() < timeoutS) && slidemotorback.isBusy() && slidemotorfront.isBusy()) {
                 // holds up execution to let the slide go up to the right place
 
-            }
+            // }
             //slidemotorback.setPower(Math.abs(0));
             //slidemotorfront.setPower(Math.abs(0));
 
