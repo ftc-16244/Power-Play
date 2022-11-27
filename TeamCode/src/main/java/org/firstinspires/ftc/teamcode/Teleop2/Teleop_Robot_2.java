@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Enums.SlideTrainerState;
 import org.firstinspires.ftc.teamcode.Subsystem2.Gripper2;
 import org.firstinspires.ftc.teamcode.Subsystem2.Slide_Trainer2;
+import org.firstinspires.ftc.teamcode.Subsystem2.TrackingWheelLifters;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
@@ -32,6 +33,8 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
     Gripper2 gripper = new Gripper2(this);
 
+    TrackingWheelLifters trkWhlLifters = new TrackingWheelLifters(this);
+
     private TurnerState turnerState = TurnerState.DISABLED; // "m" = class variable that all methods can share. Not a local variable
 
     //ENUMS
@@ -43,24 +46,26 @@ public class Teleop_Robot_2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
 
-
-
-
-        // initialize HW by calling the init method stored in the subsystem
+        // set up local variables
         double  slidePosition;
+        double  speedFactor = 0.7;
+        double expo =   3; // has to be 1 or 3
 
+        // set up Mecanum Drive
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap); // this has to be here inside the runopmode. The others go above as class variables
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        // Initialize the sub systems. Note the init method is inside the subsystem class
         slideTrainer.init(hardwareMap);
-
         gripper.init(hardwareMap);
+        trkWhlLifters.init(hardwareMap);
+        // Move servos to start postion. Grippers open and track wheels up (for teleop)
+
         gripper.turnerSetPosition1();//back
         gripper.gripperOpen(); // for teleop start with the gripper open. for Auto is needs to be closed to hold the cone
-        //gripper.rollersInit();
+        trkWhlLifters.trkWhlsUp(); // lift up for teleop put down for auto
 
-        //slideTrainer.slideMechanicalReset(); // run reset on init to make sure slide is retracted all the way\
-        //slideTrainerState = SlideTrainerState.MECH_RESET; // init puts us in this state, the timew and limit swtch tell when we coe out of it.
+        // Telemetry
         telemetry.addData("Lift State", slideTrainerState);
         telemetry.addData("Turner State", turnerState);
         dashboard = FtcDashboard.getInstance();
@@ -76,9 +81,9 @@ public class Teleop_Robot_2 extends LinearOpMode {
         while (!isStopRequested() && teleopTimer.time() < TELEOP_TIME_OUT) {
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y * .7,
-                            -gamepad1.left_stick_x*.7,
-                            -gamepad1.right_stick_x*.7
+                            Math.pow(-gamepad1.left_stick_y, expo) * speedFactor,
+                            Math.pow(-gamepad1.left_stick_x,expo) * speedFactor,
+                            Math.pow(-gamepad1.right_stick_x,expo) * speedFactor
                     )
             );
 
