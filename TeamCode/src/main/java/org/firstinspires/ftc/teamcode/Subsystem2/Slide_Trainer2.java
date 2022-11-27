@@ -36,6 +36,14 @@ public class Slide_Trainer2 {
     public static final double      SLIDE_LEVEL_5                   = 32.5; // inches 33" Junction
     public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
 
+    // Levels for Cone Stack
+    public static final double      CONE_5_HEIGHT                   = 6; // inches Load cone level
+    public static final double      CONE_4_HEIGHT                    = 5; // inches ground junction
+    public static final double      CONE_3_HEIGHT                   = 4; // inches 12" Junction
+    public static final double      CONE_2_HEIGHT                   = 3; // inches 24" Junction
+
+
+
     private static final double     LIFT_HEIGHT_CORRECTION_FACTOR   =   1.13;
     private static final double     TICKS_PER_MOTOR_REV             = 145.1; // goBilda 1150  //312 RPM  537.7
     private static final double     PULLEY_DIA                      = 40; // milimeters
@@ -122,6 +130,30 @@ public class Slide_Trainer2 {
     public void setSlideLevel5(){
         targetHeight = ( SLIDE_LEVEL_5);
         liftToTargetHeight(targetHeight,3);
+
+    }
+
+
+    public void setSlideCone5(){
+        targetHeight = (CONE_5_HEIGHT);
+        liftToTargetHeight(targetHeight,2);
+
+    }
+
+    public void setSlideCone4(){
+        targetHeight = (CONE_4_HEIGHT);
+        liftToTargetHeight(targetHeight,2);
+
+    }
+      public void setSlideCone3(){
+        targetHeight = (CONE_3_HEIGHT);
+        liftToTargetHeight(targetHeight,2);
+
+    }
+
+    public void setSlideCone2(){
+        targetHeight = (CONE_2_HEIGHT);
+        liftToTargetHeight(targetHeight,2);
 
     }
 
