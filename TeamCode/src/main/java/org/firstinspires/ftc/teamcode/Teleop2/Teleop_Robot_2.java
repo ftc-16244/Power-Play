@@ -76,9 +76,9 @@ public class Teleop_Robot_2 extends LinearOpMode {
         while (!isStopRequested() && teleopTimer.time() < TELEOP_TIME_OUT) {
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
+                            -gamepad1.left_stick_y * .7,
+                            -gamepad1.left_stick_x*.7,
+                            -gamepad1.right_stick_x*.7
                     )
             );
 
@@ -119,10 +119,16 @@ public class Teleop_Robot_2 extends LinearOpMode {
                 //slideTrainer.targetHeight = 0;
             }
             if (gamepad1.left_trigger > 0.25) {
-                gripper.gripperOpen();
+
+                gripper.TopArmOpen(); // top arm of gripper
+                gripper.gripperOpen(); //cam type gippers
+
             }
 
             if (gamepad1.right_trigger > 0.25) {
+                gripper.topArmClosed();
+                sleep(gripper.GRIPPER_DELAY); // add slight delay to allow top arm to get to cone first
+
                 gripper.gripperClosed();
             }
 //// GAMEPAD #2/////////////////////////
