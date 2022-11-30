@@ -20,7 +20,7 @@ public class TrackingWheelLifters {
 
     //Constants for rollers
     public static final double      TRACK_WHL_PERP_UP    = 0.5; // not gripped
-    public static final double       TRACK_WHL_PERP_DOWN      = 0.25; // not gripped
+    public static final double       TRACK_WHL_PERP_DOWN = 0.0; // not gripped
 
     public static final double      TRACK_WHL_PARAL_UP    = 0.5; // not gripped
     public static final double       TRACK_WHL_PARAL_DOWN      = 0.25; // not gripped

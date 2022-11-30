@@ -37,10 +37,10 @@ public class Slide_Trainer2 {
     public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
 
     // Levels for Cone Stack
-    public static final double      CONE_5_HEIGHT                   = 6; // inches Load cone level
-    public static final double      CONE_4_HEIGHT                    = 5; // inches ground junction
-    public static final double      CONE_3_HEIGHT                   = 4; // inches 12" Junction
-    public static final double      CONE_2_HEIGHT                   = 3; // inches 24" Junction
+    public static final double      CONE_5_HEIGHT                   = 5.25; // inches Load cone level
+    public static final double      CONE_4_HEIGHT                   = 4; // inches ground junction
+    public static final double      CONE_3_HEIGHT                   = 3; // inches 12" Junction
+    public static final double      CONE_2_HEIGHT                   = 2.0; // inches 24" Junction
 
 
 
