@@ -195,8 +195,11 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .forward(24)
-                .turn(Math.toRadians(270))
+                .forward(20)
+                .waitSeconds(0.05)
+                .turn(Math.toRadians(90))
+                .waitSeconds(0.05)
+                .strafeLeft(36)
                 .build();
 
         drive.followTrajectorySequence(traj1);
