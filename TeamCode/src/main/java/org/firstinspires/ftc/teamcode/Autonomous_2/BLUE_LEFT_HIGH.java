@@ -196,7 +196,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         // even if the April tag fails this will still run.
         // Plus you only have to edit one block of code for all 3 cases.
         // This is to place on the LHS blue high goal
-        Pose2d startPose = new Pose2d(-36, -50, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
