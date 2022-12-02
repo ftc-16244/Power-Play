@@ -19,11 +19,11 @@ public class TrackingWheelLifters {
     ElapsedTime runtime = new ElapsedTime();
 
     //Constants for rollers
-    public static final double      TRACK_WHL_PERP_UP    = 0.5; // not gripped
-    public static final double       TRACK_WHL_PERP_DOWN = 0.0; // not gripped
+    public static final double      TRACK_WHL_PERP_UP       = 0.5; //perpendicular wheel up position
+    public static final double      TRACK_WHL_PERP_DOWN     = 0.0; // perpendicular wheel down position
 
-    public static final double      TRACK_WHL_PARAL_UP    = 0.5; // not gripped
-    public static final double       TRACK_WHL_PARAL_DOWN      = 0.25; // not gripped
+    public static final double      TRACK_WHL_PARAL_UP      = 0.5; //parallel wheel up position
+    public static final double      TRACK_WHL_PARAL_DOWN    = 0.25; // parallel wheel down position
 
 
 
@@ -36,25 +36,22 @@ public class TrackingWheelLifters {
     public void init(HardwareMap hwMap)  {
 
               // Initialize tuner the servo that rotates the cone capture bucket
-        trkWhlLiftPerp = hwMap.get(Servo.class,"trkWhlLiftPerp");// port 4
-        //turner.setPosition(BACK);
+        trkWhlLiftPerp = hwMap.get(Servo.class,"trkWhlLiftPerp");
 
-        // Initialize the left gripper
-        trkWhlLiftParal = hwMap.get(Servo.class,"trkWhlLiftParal"); //port 0
-
+        trkWhlLiftParal = hwMap.get(Servo.class,"trkWhlLiftParal");
 
     }
 
 
-    //Tracking WHeel Lift Methods - Lift up an keep up in Teleop - Put Down in Auto
+    //Tracking Wheel Lift Methods - Lift up an keep up in Teleop - Put Down in Auto
     public void trkWhlsUp(){
-        trkWhlLiftPerp.setPosition(TRACK_WHL_PERP_UP); // back
-        trkWhlLiftParal.setPosition(TRACK_WHL_PARAL_UP); // back
+        trkWhlLiftPerp.setPosition(TRACK_WHL_PERP_UP); //
+        trkWhlLiftParal.setPosition(TRACK_WHL_PARAL_UP); // may not have this for parallel wheel
     }
 
     public void trkWhlsDown(){
-        trkWhlLiftPerp.setPosition(TRACK_WHL_PERP_DOWN); // back
-        trkWhlLiftParal.setPosition(TRACK_WHL_PARAL_DOWN); // back
+        trkWhlLiftPerp.setPosition(TRACK_WHL_PERP_DOWN); //
+        trkWhlLiftParal.setPosition(TRACK_WHL_PARAL_DOWN); //
     }
 
 }
