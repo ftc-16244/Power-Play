@@ -200,9 +200,9 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-36, -20,Math.toRadians(0)))
-                .waitSeconds(0.5)
-                .lineToLinearHeading(new Pose2d(-36, 10,Math.toRadians(0)))
+                .forward(24)
+                .turn(Math.toRadians(270))
+               /* .waitSeconds(0.5)
                 .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
                 .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
                 .waitSeconds(1)
@@ -214,41 +214,18 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
                 .waitSeconds(1)
                 .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
                 .addTemporalMarker(11,()->{slideTrainer.setSlideCone5();}) // use cone 5 height here
-                .build();
 
-        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .strafeRight(11)
-                .waitSeconds(0.5)
-                .back(22)
-                .addTemporalMarker(3,()->{slideTrainer.setSlideLevel2();})
-                .addTemporalMarker(4,()->{gripper.gripperClosed();})
+                */
                 .build();
-
-        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .waitSeconds(1)
-                .addTemporalMarker(1.25,()->{slideTrainer.setSlideLevel5();})
-                .forward(22)
-                .strafeLeft(12)
-                .addTemporalMarker(3,()->{gripper.turnerSetPosition2();})
-                .forward(8)
-                .addTemporalMarker(5,()->{gripper.gripperOpen();})
-                .back(8)
-                .addTemporalMarker(7,()->{gripper.turnerSetPosition1();})
-                .strafeRight(11)
-                .addTemporalMarker(8,()->{slideTrainer.setSlideLevel1();})
-                .back(22)
-                .build();
-
 
         drive.followTrajectorySequence(traj1);
-        drive.followTrajectorySequence(traj2);
-        drive.followTrajectorySequence(traj3);
+
 
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
 
-            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end()) // make sure to start at the end of traj 3
+            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
                    // after the cones, just out the path to part in the lest here.
 
 
@@ -262,7 +239,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
+            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end())
                    // go park in the middle
 
 
@@ -271,7 +248,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
             drive.followTrajectorySequence(traj5);
         }
         else if(tagOfInterest.id == RIGHT){
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj3.end())
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the RIGHT
 
 
