@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 
 @Config
-@TeleOp(group = "Test")
+@TeleOp(group = "Teleop")
 
 public class Teleop_Robot_2 extends LinearOpMode {
 
@@ -35,12 +35,17 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
     TrackingWheelLifters trkWhlLifters = new TrackingWheelLifters(this);
 
-    private TurnerState turnerState = TurnerState.DISABLED; // "m" = class variable that all methods can share. Not a local variable
+    private TurnerState turnerState = TurnerState.DISABLED; //
+    private TurnerPosition turnerPos = TurnerPosition.BACK; //
 
     //ENUMS
     enum TurnerState {
         ENABLED,
         DISABLED}
+
+    enum TurnerPosition {
+        FORWARD,
+        BACK}
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -59,6 +64,8 @@ public class Teleop_Robot_2 extends LinearOpMode {
         slideTrainer.init(hardwareMap);
         gripper.init(hardwareMap);
         trkWhlLifters.init(hardwareMap);
+
+
         // Move servos to start postion. Grippers open and track wheels up (for teleop)
 
         gripper.turnerSetPosition1();//back
@@ -68,6 +75,7 @@ public class Teleop_Robot_2 extends LinearOpMode {
         // Telemetry
         telemetry.addData("Lift State", slideTrainerState);
         telemetry.addData("Turner State", turnerState);
+        telemetry.addData("Turner Position", turnerPos);
         dashboard = FtcDashboard.getInstance();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -139,10 +147,12 @@ public class Teleop_Robot_2 extends LinearOpMode {
 //// GAMEPAD #2/////////////////////////
             if (gamepad2.a  &&  turnerState == TurnerState.ENABLED) {
                 gripper.turnerSetPosition1();
+                turnerPos=TurnerPosition.BACK; // sets state to back after requesting a servo move to the back
             }
 
             if (gamepad2.y  &&  turnerState == TurnerState.ENABLED) {
                 gripper.turnerSetPosition2();
+                turnerPos=TurnerPosition.FORWARD; //
             }
 
 
@@ -157,12 +167,12 @@ public class Teleop_Robot_2 extends LinearOpMode {
             if (gamepad2.dpad_right) {
                 slideTrainer.setSlideLevel5();
             }
-
-            if (gamepad2.left_trigger > 0.25) {
+            // this makes sure the gripper is in the back position before lowering. Otherwise ir hits the front of the robot chassis
+            if (gamepad2.left_trigger > 0.25 && turnerPos == TurnerPosition.BACK) {
                 slideTrainer.setSlideLevel2();
             }
 
-            if (gamepad2.right_trigger > 0.25) {
+            if (gamepad2.right_trigger > 0.25 && turnerPos == TurnerPosition.BACK) {
                 slideTrainer.setSlideLevel1();
             }
 
