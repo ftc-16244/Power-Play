@@ -239,34 +239,34 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end())
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
                    // go park in the middle
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj5);
+            drive.followTrajectorySequence(traj2);
         }
         else if(tagOfInterest.id == RIGHT){
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj1.end())
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the RIGHT
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj6);
+            drive.followTrajectorySequence(traj3);
         }
 
         // make sure to have a null case to try and park if you dont see a tag
         else {
 
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
+            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the middle
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj5);
+            drive.followTrajectorySequence(traj4);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
