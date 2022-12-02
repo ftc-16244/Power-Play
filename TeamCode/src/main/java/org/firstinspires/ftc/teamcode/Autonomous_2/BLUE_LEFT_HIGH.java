@@ -66,11 +66,6 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
     int LEFT = 1; // Tag ID 1 from the 36h11 family
     int MIDDLE = 2; // Tag ID 2 from the 36h11 family
     int RIGHT = 3; // Tag ID 3 from the 36h11 family
-    public static double DISTANCE = 22;
-    public static double DISTANCE_HALF = DISTANCE/2.0;
-    public static double DISTANCE1 = 30;
-    public static double LEFTDISTANCE = 30;
-    public static double RIGHTDISTANCE = 30;
 
     AprilTagDetection tagOfInterest = null;
 
@@ -202,20 +197,6 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(24)
                 .turn(Math.toRadians(270))
-               /* .waitSeconds(0.5)
-                .addTemporalMarker(2,()->{slideTrainer.setSlideLevel5();})
-                .addTemporalMarker(4,()->{gripper.turnerSetPosition2();})
-                .waitSeconds(1)
-                .forward(8)
-                .waitSeconds(1)
-                .addTemporalMarker(7,()->{gripper.gripperOpen();})
-                .waitSeconds(1)
-                .back(8)
-                .waitSeconds(1)
-                .addTemporalMarker(10,()->{gripper.turnerSetPosition1();})
-                .addTemporalMarker(11,()->{slideTrainer.setSlideCone5();}) // use cone 5 height here
-
-                */
                 .build();
 
         drive.followTrajectorySequence(traj1);
@@ -225,36 +206,36 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
 
         if(tagOfInterest.id == LEFT) {
 
-            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
                    // after the cones, just out the path to part in the lest here.
 
 
                     .build();
 
 
-            drive.followTrajectorySequence(traj4); // left park from cone placement
+            drive.followTrajectorySequence(traj2); // left park from cone placement
 
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
                    // go park in the middle
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj2);
+            drive.followTrajectorySequence(traj3);
         }
         else if(tagOfInterest.id == RIGHT){
-            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
+            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the RIGHT
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj3);
+            drive.followTrajectorySequence(traj4);
         }
 
         // make sure to have a null case to try and park if you dont see a tag
