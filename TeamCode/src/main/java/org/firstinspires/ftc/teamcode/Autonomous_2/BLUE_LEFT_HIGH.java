@@ -201,7 +201,6 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
                 .waitSeconds(0.05)
                 .strafeLeft(36)
                 .build();
-
         drive.followTrajectorySequence(traj1);
 
 
