@@ -53,7 +53,7 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
         // set up local variables
         double  slidePosition;
-        double  speedFactor = 0.7;
+        double  speedFactor = 1.0;
         double expo =   3; // has to be 1 or 3
 
         // set up Mecanum Drive
