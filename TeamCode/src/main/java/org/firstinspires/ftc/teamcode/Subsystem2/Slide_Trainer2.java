@@ -28,7 +28,7 @@ public class Slide_Trainer2 {
 
     //Constants Lift
     public  static double           SLIDELIFTSPEED                  = 0.70; //
-    public  static double           SLIDELIFTSPEEDSLOWER            = 0.50; //
+    public  static double           SLIDELIFTSPEEDSLOWER            = 0.30; //
     public static  double           SLIDERESETSPEED                 = -0.2; //
     public static final double      SLIDE_LEVEL_1                   = 0; // inches Load cone level
     public static final double      SLIDE_LEVEL_2                   = 2; // inches ground junction
@@ -112,7 +112,7 @@ public class Slide_Trainer2 {
 
     public void setSlideLevel2(){
         targetHeight = ( SLIDE_LEVEL_2);
-        liftToTargetHeight(targetHeight,3, SLIDELIFTSPEED);
+        liftToTargetHeight(targetHeight,3,  SLIDELIFTSPEEDSLOWER);
 
     }
 

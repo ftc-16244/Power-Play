@@ -30,7 +30,7 @@ public class Gripper2 {
     public static final double      GRIPPER_TOP_INITIAL    = 0.15; // should be horizontal at init
     public static final double      GRIPPER_TOP_OPEN       = 0.38; // just above cone on ground
     public static final double      GRIPPER_TOP_CLOSED      = 0.50 ; // cone pulled in for gripper
-    public static final long    GRIPPER_DELAY            = 400 ; // delay between top and side gripper action (miliseconds)
+    public static final long    GRIPPER_DELAY            = 300 ; // delay between top and side gripper action (miliseconds)
 
 
     //Constants for turnythingy

@@ -20,7 +20,7 @@ public class TrackingWheelLifters {
 
     //Constants for rollers
     public static final double      TRACK_WHL_PERP_UP       = 0.5; //perpendicular wheel up position
-    public static final double      TRACK_WHL_PERP_DOWN     = 0.0; // perpendicular wheel down position
+    public static final double      TRACK_WHL_PERP_DOWN     = 0; // perpendicular wheel down position
 
     public static final double      TRACK_WHL_PARAL_UP      = 0.5; //parallel wheel up position
     public static final double      TRACK_WHL_PARAL_DOWN    = 0.25; // parallel wheel down position
