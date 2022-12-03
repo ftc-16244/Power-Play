@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class BLUE_LEFT_HIGH extends LinearOpMode
+public class bluelefttwocones extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -206,24 +206,53 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
                 .waitSeconds(0.05)
                 .addTemporalMarker(6,()->{gripper.gripperOpen();})
                 .waitSeconds(1)
-                .forward(3)
-                .addTemporalMarker(10,()->{slideTrainer.setSlideLevel1();})
-                .strafeLeft(12)
+                .forward(4)
+                .addTemporalMarker(10,()->{slideTrainer.setSlideCone5();})
+                .strafeLeft(13)
+                .turn(Math.toRadians(180))
+                .back(28.5)
+                .addDisplacementMarker(15,() ->{gripper.gripperClosed();})
+                //.addDisplacementMarker(() ->{slideTrainer.setSlideLevel5();})
                 .build();
+
+
         drive.followTrajectorySequence(traj1);
+/*
+        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
+                .addTemporalMarker(1,()->{gripper.gripperOpen();})
+                .addTemporalMarker(3,()->{gripper.turnerSetPosition1();})
+                .addTemporalMarker(6,()->{slideTrainer.setSlideCone5();})
+
+
+
+
+
+.forward(5)
+
+.waitSeconds(0.05)
+.addTemporalMarker(9,()->{gripper.gripperOpen();})
+.waitSeconds(1)
+.back(3)
+.addTemporalMarker(13,()->{gripper.turnerSetPosition1();})
+.addTemporalMarker(17,()->{slideTrainer.setSlideCone5();})
+.build();
+ */
+
+
+        //drive.followTrajectorySequence(traj2);
+
 
 
 ////// Now decide where to park after cone placement
-
+/*
         if(tagOfInterest.id == LEFT) {
 
-            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
-                    .forward(24)
-
+            TrajectorySequence traj2a = drive.trajectorySequenceBuilder(traj2.end()) // make sure to start at the end of traj 3
+                    .strafeRight(0.1)
                     .build();
 
 
-            drive.followTrajectorySequence(traj2); // left park from cone placement
+            drive.followTrajectorySequence(traj2a); // left park from cone placement
 
 
 
@@ -231,7 +260,6 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
 
             TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
-                    .strafeLeft(0.05)
 
                     .build();
 
@@ -239,7 +267,6 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         }
         else if(tagOfInterest.id == RIGHT){
             TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
-                    .back(24)
 
                     .build();
 
