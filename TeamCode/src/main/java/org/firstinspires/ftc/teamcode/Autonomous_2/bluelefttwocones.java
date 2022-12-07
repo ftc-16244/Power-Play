@@ -202,11 +202,11 @@ public class bluelefttwocones extends LinearOpMode
                 .strafeRight(56.5)
                 .waitSeconds(0.05)
                 .addTemporalMarker(4,()->{slideTrainer.setSlideLevel5();})
-                .back(3.25)
+                .back(3)
                 .waitSeconds(0.05)
                 .addTemporalMarker(6,()->{gripper.gripperOpen();})
                 .waitSeconds(1)
-                .forward(4.25)
+                .forward(4)
                 .addTemporalMarker(10,()->{slideTrainer.setSlideCone5();})
                 .strafeLeft(13)
                 .turn(Math.toRadians(180))
@@ -238,11 +238,11 @@ public class bluelefttwocones extends LinearOpMode
         slideTrainer.setSlideLevel5();
 
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(28.5)
+                .forward(28)
                 .waitSeconds(1)
                 .turn(Math.toRadians(180))
                 .waitSeconds(1)
-                .strafeRight(13)
+                .strafeRight(12.5)
                 .waitSeconds(1)
                 .back(3.5)
                 .build();
