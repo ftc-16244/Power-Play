@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class BLUE_LEFT_HIGH extends LinearOpMode
+public class RIGHT_PARK extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -195,21 +195,8 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .forward(4.5)
-                .waitSeconds(0.05)
-                .turn(Math.toRadians(90))
-                .waitSeconds(0.05)
-                .strafeRight(56.5)
-                .waitSeconds(0.05)
-                .addTemporalMarker(4,()->{slideTrainer.setSlideLevel5();})
-                .back(3)
-                .waitSeconds(0.05)
-                .addTemporalMarker(6,()->{gripper.gripperOpen();})
-                .waitSeconds(1)
-                .forward(3)
-                .addTemporalMarker(10,()->{slideTrainer.setSlideLevel1();})
-                .strafeLeft(12)
-                .build();
+                .forward(26)
+                        .build();
         drive.followTrajectorySequence(traj1);
 
 
@@ -218,7 +205,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         if(tagOfInterest.id == LEFT) {
 
             TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
-                    .forward(24)
+                    .strafeLeft(24)
 
                     .build();
 
@@ -231,7 +218,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
 
             TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
-                    .strafeLeft(0.05)
+                    .forward(1)
 
                     .build();
 
@@ -239,7 +226,7 @@ public class BLUE_LEFT_HIGH extends LinearOpMode
         }
         else if(tagOfInterest.id == RIGHT){
             TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
-                    .back(24)
+                    .strafeRight(24)
 
                     .build();
 

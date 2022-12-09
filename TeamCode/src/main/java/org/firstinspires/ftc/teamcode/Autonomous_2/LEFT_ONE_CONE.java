@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class bluelefttwocones extends LinearOpMode
+public class LEFT_ONE_CONE extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -206,104 +206,56 @@ public class bluelefttwocones extends LinearOpMode
                 .waitSeconds(0.05)
                 .addTemporalMarker(6,()->{gripper.gripperOpen();})
                 .waitSeconds(1)
-                .forward(4)
-                .addTemporalMarker(10,()->{slideTrainer.setSlideCone5();})
-                .strafeLeft(13)
-                .turn(Math.toRadians(180))
-                /*
-                .back(28.5)
-                .addDisplacementMarker(15,() ->{gripper.gripperClosed();})
-                .addDisplacementMarker(() ->{slideTrainer.setSlideLevel5();})
-
-                 */
-                .build();
-
-
-
-
-        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .back(28.5)
-                .addTemporalMarker(1,()->{gripper.gripperOpen();})
-                .addTemporalMarker(3,()->{gripper.turnerSetPosition1();})
-                .addTemporalMarker(6,()->{slideTrainer.setSlideCone5();})
-                .addTemporalMarker(7,()->{gripper.gripperClosed();})
-                .forward(0.5)
-                .build();
-
-
-        drive.followTrajectorySequence(traj1);
-        drive.followTrajectorySequence(traj2);
-
-        sleep(1000);
-        slideTrainer.setSlideLevel5();
-
-        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(28)
-                .waitSeconds(1)
-                .turn(Math.toRadians(180))
-                .waitSeconds(1)
-                .strafeRight(12.5)
-                .waitSeconds(1)
-                .back(3.5)
-                .build();
-        drive.followTrajectorySequence(traj3);
-
-
-        sleep(1000);
-        gripper.gripperOpen();
-
-        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
                 .forward(3)
-            .addTemporalMarker(10,()->{slideTrainer.setSlideLevel1();})
-            .strafeLeft(16)
-            .build();
-        drive.followTrajectorySequence(traj4);
-
+                .addTemporalMarker(10,()->{slideTrainer.setSlideLevel1();})
+                .strafeLeft(12)
+                .build();
+        drive.followTrajectorySequence(traj1);
 
 
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
 
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end()) // make sure to start at the end of traj 3
-                    .strafeRight(0.3)
+            TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
                     .forward(24)
+
                     .build();
 
 
-            drive.followTrajectorySequence(traj5); // left park from cone placement
+            drive.followTrajectorySequence(traj2); // left park from cone placement
 
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj4.end())
-                    .strafeLeft(0.3)
+            TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj1.end())
+                    .strafeLeft(0.05)
 
                     .build();
 
-            drive.followTrajectorySequence(traj6);
+            drive.followTrajectorySequence(traj3);
         }
         else if(tagOfInterest.id == RIGHT){
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj4.end())
-                    .strafeRight(0.3)
+            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
                     .back(24)
+
                     .build();
 
-            drive.followTrajectorySequence(traj7);
+            drive.followTrajectorySequence(traj4);
         }
 
         // make sure to have a null case to try and park if you dont see a tag
         else {
 
-            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj1.end())
+            TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the middle
 
 
                     .build();
 
-            drive.followTrajectorySequence(traj8);
+            drive.followTrajectorySequence(traj4);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
