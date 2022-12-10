@@ -195,30 +195,21 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .forward(4.5)
+                .lineToLinearHeading(new Pose2d(15,0,Math.toRadians(90)))
+                .strafeRight(45.5)
                 .waitSeconds(0.05)
-                .turn(Math.toRadians(90))
+                .addTemporalMarker(3,()->{slideTrainer.setSlideLevel5();})
+                .back(4.1)
                 .waitSeconds(0.05)
-                .strafeRight(56.5)
-                .waitSeconds(0.05)
-                .addTemporalMarker(4,()->{slideTrainer.setSlideLevel5();})
-                .back(3)
-                .waitSeconds(0.05)
-                .addTemporalMarker(6,()->{gripper.gripperOpen();})
+                .addTemporalMarker(5.5,()->{gripper.gripperOpen();})
                 .waitSeconds(1)
-                .forward(4)
+                .forward(4.1)
                 .addTemporalMarker(10,()->{slideTrainer.setSlideCone5();})
                 .strafeLeft(13)
                 .turn(Math.toRadians(180))
-                /*
-                .back(28.5)
-                .addDisplacementMarker(15,() ->{gripper.gripperClosed();})
-                .addDisplacementMarker(() ->{slideTrainer.setSlideLevel5();})
-
-                 */
                 .build();
 
-
+        drive.followTrajectorySequence(traj1);
 
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
@@ -227,11 +218,11 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
                 .addTemporalMarker(3,()->{gripper.turnerSetPosition1();})
                 .addTemporalMarker(6,()->{slideTrainer.setSlideCone5();})
                 .addTemporalMarker(7,()->{gripper.gripperClosed();})
-                .forward(0.5)
+                .waitSeconds(0.5)
+                .forward(1)
                 .build();
 
 
-        drive.followTrajectorySequence(traj1);
         drive.followTrajectorySequence(traj2);
 
         sleep(1000);
@@ -244,7 +235,7 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
                 .waitSeconds(1)
                 .strafeRight(13)
                 .waitSeconds(1)
-                .back(3.5)
+                .back(3)
                 .build();
         drive.followTrajectorySequence(traj3);
 
@@ -253,7 +244,7 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
         gripper.gripperOpen();
 
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
-                .forward(3)
+                .forward(2.5)
             .addTemporalMarker(10,()->{slideTrainer.setSlideLevel1();})
             .strafeLeft(12)
             .build();

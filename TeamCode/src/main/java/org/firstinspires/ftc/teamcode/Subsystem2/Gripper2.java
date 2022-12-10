@@ -22,10 +22,10 @@ public class Gripper2 {
     //Constants for rollers
     public static final double      GRIPPER_LEFT_INITIAL    = 0.5; // not gripped
     public static final double      GRIPPER_LEFT_OPEN       = 0.25; // not gripped
-    public static final double      GRIPPER_LEFT_CLOSED      = 0.6 ; // cone gripped
+    public static final double      GRIPPER_LEFT_CLOSED      = 0.63 ; // cone gripped
     public static final double      GRIPPER_RIGHT_INITIAL   = 0.50 ; // not gripped
     public static final double      GRIPPER_RIGHT_OPEN      = 0.75; // not gripped
-    public static final double      GRIPPER_RIGHT_CLOSED     = 0.40; // gripped
+    public static final double      GRIPPER_RIGHT_CLOSED     = 0.37; // gripped
 
     public static final double      GRIPPER_TOP_INITIAL    = 0.15; // should be horizontal at init
     public static final double      GRIPPER_TOP_OPEN       = 0.38; // just above cone on ground
