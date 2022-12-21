@@ -196,7 +196,7 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(15,0,Math.toRadians(90)))
-                .strafeRight(45.5)
+                .strafeRight(45)
                 .waitSeconds(0.05)
                 .addTemporalMarker(3,()->{slideTrainer.setSlideLevel5();})
                 .back(4.1)
@@ -213,12 +213,12 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
 
 
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .back(28.5)
+                .back(29)
                 .addTemporalMarker(1,()->{gripper.gripperOpen();})
                 .addTemporalMarker(3,()->{gripper.turnerSetPosition1();})
                 .addTemporalMarker(6,()->{slideTrainer.setSlideCone5();})
                 .addTemporalMarker(7,()->{gripper.gripperClosed();})
-                .waitSeconds(0.5)
+                .waitSeconds(1)
                 .forward(1)
                 .build();
 
@@ -230,11 +230,11 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
 
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
                 .forward(28)
-                .waitSeconds(1)
+                .waitSeconds(0.05)
                 .turn(Math.toRadians(180))
                 .waitSeconds(1)
                 .strafeRight(13)
-                .waitSeconds(1)
+                .waitSeconds(0.05)
                 .back(3)
                 .build();
         drive.followTrajectorySequence(traj3);
@@ -258,7 +258,7 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end()) // make sure to start at the end of traj 3
                     .strafeRight(0.3)
-                    .forward(24)
+                    .forward(24.5)
                     .build();
 
 
@@ -279,7 +279,7 @@ public class BLUE_LEFT_TWO_CONES extends LinearOpMode
         else if(tagOfInterest.id == RIGHT){
             TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj4.end())
                     .strafeRight(0.3)
-                    .back(24)
+                    .back(24.5)
                     .build();
 
             drive.followTrajectorySequence(traj7);
