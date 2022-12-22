@@ -45,7 +45,7 @@ public class DriveConstants2 {
      */
     public static double WHEEL_RADIUS = 48/25.4; // in mecanum wheels are 96mm dia
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 13.99;// 16.5 is actual
+    public static double TRACK_WIDTH = 14.05;// 16.5 is actual
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -53,8 +53,8 @@ public class DriveConstants2 {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.016;//1 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0.0004;
+    public static double kV = 0.018;//1 / rpmToVelocity(MAX_RPM);
+    public static double kA = 0.0006;
     public static double kStatic = 0.057;
 
     /*
