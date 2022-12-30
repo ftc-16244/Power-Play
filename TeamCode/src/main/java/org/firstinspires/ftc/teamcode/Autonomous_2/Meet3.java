@@ -194,8 +194,8 @@ public class Meet3 extends LinearOpMode
         Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(startPose);
 
+        //Positions the robot at the low pole
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-<<<<<<< HEAD
                 .strafeLeft(15.5)
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(0.75,()->{gripper.turnerSetPosition2();})
@@ -203,9 +203,11 @@ public class Meet3 extends LinearOpMode
                 .build();
 
         drive.followTrajectorySequence(traj1);
+
+        //Delivers the first cone
         sleep(1000);
         gripper.gripperOpen();
-
+//Travelling to the stack and grabs the second cone
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
@@ -221,6 +223,9 @@ public class Meet3 extends LinearOpMode
 
         sleep(1000);
         slideTrainer.setSlideCone6();
+
+        //Positions the robot at the mid pole
+        //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
                 .forward(30)
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel4();})
@@ -230,9 +235,13 @@ public class Meet3 extends LinearOpMode
                 .build();
 
         drive.followTrajectorySequence(traj3);
+
+        //Delivers the second cone
         sleep(1000);
         gripper.gripperOpen();
 
+        //Travelling to the stack and grabs the third cone
+        /*
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone4();})
