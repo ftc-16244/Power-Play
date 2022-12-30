@@ -38,6 +38,7 @@ public class Slide_Trainer2 {
     public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
 
     // Levels for Cone Stack
+    public static final double      CONE_6_HEIGHT                   = 10; // inches right below the wall
     public static final double      CONE_5_HEIGHT                   = 5.25; // inches Load cone level
     public static final double      CONE_4_HEIGHT                   = 4; // inches ground junction
     public static final double      CONE_3_HEIGHT                   = 3; // inches 12" Junction
@@ -133,7 +134,11 @@ public class Slide_Trainer2 {
         liftToTargetHeight(targetHeight,3, SLIDELIFTSPEED);
 
     }
+    public void setSlideCone6(){
+        targetHeight = (CONE_6_HEIGHT);
+        liftToTargetHeight(targetHeight,2, SLIDELIFTSPEED);
 
+    }
 
     public void setSlideCone5(){
         targetHeight = (CONE_5_HEIGHT);
