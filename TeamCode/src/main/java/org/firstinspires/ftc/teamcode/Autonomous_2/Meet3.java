@@ -195,6 +195,7 @@ public class Meet3 extends LinearOpMode
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
+<<<<<<< HEAD
                 .strafeLeft(15.5)
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(0.75,()->{gripper.turnerSetPosition2();})
@@ -254,6 +255,19 @@ public class Meet3 extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
 
+=======
+                .strafeLeft(14)
+                .build();
+
+        drive.followTrajectorySequence(traj1);
+
+////// Now decide where to park after cone placement
+
+        if(tagOfInterest.id == LEFT) {
+
+            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
+                    
+>>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
                     .build();
 
 
@@ -265,15 +279,21 @@ public class Meet3 extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
 
             TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj1.end())
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
                     .build();
 
             drive.followTrajectorySequence(traj6);
         }
         else if(tagOfInterest.id == RIGHT){
             TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj1.end())
+<<<<<<< HEAD
 
+=======
+>>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
                     .build();
 
             drive.followTrajectorySequence(traj7);
@@ -285,7 +305,10 @@ public class Meet3 extends LinearOpMode
             TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj1.end())
                     // go park in the middle
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
                     .build();
 
             drive.followTrajectorySequence(traj8);
