@@ -198,14 +198,14 @@ public class Meet3 extends LinearOpMode
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .strafeLeft(15.5)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .UNSTABLE_addTemporalMarkerOffset(0.75,()->{gripper.turnerSetPosition2();})
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
                 .forward(4)
                 .build();
 
         drive.followTrajectorySequence(traj1);
 
         //Delivers the first cone
-        sleep(1000);
+        sleep(500);
         gripper.gripperOpen();
 //Travelling to the stack and grabs the second cone
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
@@ -221,14 +221,14 @@ public class Meet3 extends LinearOpMode
 
         drive.followTrajectorySequence(traj2);
 
-        sleep(1000);
+        sleep(100);
         slideTrainer.setSlideCone6();
 
         //Positions the robot at the mid pole
         //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
                 .forward(8.5)
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
                 .strafeRight(12)
                 .forward(3.5)
@@ -252,7 +252,7 @@ public class Meet3 extends LinearOpMode
                 .build();
 
         drive.followTrajectorySequence(traj4);
-        sleep(1000);
+        sleep(100);
         slideTrainer.setSlideCone6();
 
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
@@ -266,8 +266,11 @@ public class Meet3 extends LinearOpMode
         drive.followTrajectorySequence(traj5);
 
         //Delivers the second cone
-        sleep(1000);
+        sleep(100);
         gripper.gripperOpen();
+        gripper.turnerSetPosition1();
+        sleep(100);
+        slideTrainer.setSlideLevel1();
 
 
 ////// Now decide where to park after cone placement
