@@ -212,10 +212,10 @@ public class Meet3 extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
                 .back(5)
-                .strafeLeft(36)
+                .strafeLeft(34)
                 .back(20)
                 .waitSeconds(0.5)
-                .back(6)
+                .back(9)
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.gripperClosed();})
                 .build();
 
@@ -227,11 +227,11 @@ public class Meet3 extends LinearOpMode
         //Positions the robot at the mid pole
         //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(30)
+                .forward(28)
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel4();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
                 .strafeRight(12.45)
-                .forward(4)
+                //.forward(4)
                 .build();
 
         drive.followTrajectorySequence(traj3);

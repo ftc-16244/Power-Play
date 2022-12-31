@@ -151,7 +151,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         // Change back to reguar two wheel loaclizer for robot 1
 
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-        setLocalizer(new TwoWheelTrackingLocalizer2(hardwareMap,this));
+        setLocalizer(new TwoWheelTrackingLocalizer(hardwareMap,this));
 
         // Localizer for Robot 2
         //setLocalizer(new TwoWheelTrackingLocalizer2(hardwareMap,this));
