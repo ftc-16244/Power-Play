@@ -197,7 +197,7 @@ public class Meet3 extends LinearOpMode
         //Positions the robot at the low pole
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
                 .strafeLeft(15.5)
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(0.75,()->{gripper.turnerSetPosition2();})
                 .forward(4)
                 .build();
@@ -227,35 +227,47 @@ public class Meet3 extends LinearOpMode
         //Positions the robot at the mid pole
         //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(28)
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel4();})
+                .forward(8.5)
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
-                .strafeRight(12.45)
-                //.forward(4)
+                .strafeRight(12)
+                .forward(3.5)
                 .build();
 
         drive.followTrajectorySequence(traj3);
 
         //Delivers the second cone
-        sleep(1000);
+        sleep(100);
         gripper.gripperOpen();
 
         //Travelling to the stack and grabs the third cone
-        /*
+
         TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone4();})
-                .back(4)
-                .strafeLeft(12.45)
-                .back(20)
-                .waitSeconds(0.5)
-                .back(11)
-                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.gripperClosed();})
+                .back(3.5)
+                .strafeLeft(12.5)
+                .back(8.5)
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.gripperClosed();})
                 .build();
 
         drive.followTrajectorySequence(traj4);
+        sleep(1000);
+        slideTrainer.setSlideCone6();
 
+        TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
+                .forward(8.5)
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
+                .strafeRight(12)
+                .forward(3.5)
+                .build();
 
+        drive.followTrajectorySequence(traj5);
+
+        //Delivers the second cone
+        sleep(1000);
+        gripper.gripperOpen();
 
 
 ////// Now decide where to park after cone placement

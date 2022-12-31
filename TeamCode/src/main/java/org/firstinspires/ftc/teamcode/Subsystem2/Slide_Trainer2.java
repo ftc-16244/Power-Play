@@ -40,7 +40,7 @@ public class Slide_Trainer2 {
     // Levels for Cone Stack
     public static final double      CONE_6_HEIGHT                   = 10; // inches right below the wall
     public static final double      CONE_5_HEIGHT                   = 5.25; // inches Load cone level
-    public static final double      CONE_4_HEIGHT                   = 4; // inches ground junction
+    public static final double      CONE_4_HEIGHT                   = 4.25; // inches ground junction
     public static final double      CONE_3_HEIGHT                   = 3; // inches 12" Junction
     public static final double      CONE_2_HEIGHT                   = 2.0; // inches 24" Junction
 
