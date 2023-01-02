@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class Meet3 extends LinearOpMode
+public class three_cone_delivery extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -268,76 +268,75 @@ public class Meet3 extends LinearOpMode
         //Delivers the second cone
         sleep(100);
         gripper.gripperOpen();
-        sleep(200);
+        TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
+                .back(3.5)
+                .strafeRight(11)
+                .forward(45)
+                .build();
+
+        drive.followTrajectorySequence(traj8);
         gripper.turnerSetPosition1();
-        sleep(100);
+        sleep(500);
         slideTrainer.setSlideLevel1();
 
 
-////// Now decide where to park after cone placement
 /*
+////// Now decide where to park after cone placement
+
         if(tagOfInterest.id == LEFT) {
-
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
-
-=======
-                .strafeLeft(14)
+            sleep(500);
+            gripper.turnerSetPosition1();
+            sleep(100);
+            slideTrainer.setSlideLevel1();
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end()) // make sure to start at the end of traj 3
+                    .back(3.5)
                 .build();
 
-        drive.followTrajectorySequence(traj1);
 
-////// Now decide where to park after cone placement
-
-        if(tagOfInterest.id == LEFT) {
-
-            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
-
->>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
-                    .build();
+            drive.followTrajectorySequence(traj6); // left park from cone placement
 
 
-            drive.followTrajectorySequence(traj5); // left park from cone placement
 
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj1.end())
-<<<<<<< HEAD
+            sleep(100);
+        gripper.gripperOpen();
+        TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
+                .back(3.5)
+                .strafeRight(11)
+                .forward(23)
+                .build();
+
+        drive.followTrajectorySequence(traj7);
+        gripper.turnerSetPosition1();
+        sleep(500);
+        slideTrainer.setSlideLevel1();
 
 
-=======
->>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
-                    .build();
-
-            drive.followTrajectorySequence(traj6);
         }
         else if(tagOfInterest.id == RIGHT){
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj1.end())
-<<<<<<< HEAD
 
-=======
->>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
+            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj4.end())
+                    .strafeRight(0.3)
+                    .back(24.5)
                     .build();
 
             drive.followTrajectorySequence(traj7);
+
+
         }
 
         // make sure to have a null case to try and park if you dont see a tag
+
         else {
 
-            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj1.end())
-                    // go park in the middle
-
-<<<<<<< HEAD
-
-=======
->>>>>>> f1061fae81fdd39fb021ad1c835cbf6983f1732b
-                    .build();
-
-            drive.followTrajectorySequence(traj8);
         }
+
+ */
+
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (!isStopRequested() && opModeIsActive());
