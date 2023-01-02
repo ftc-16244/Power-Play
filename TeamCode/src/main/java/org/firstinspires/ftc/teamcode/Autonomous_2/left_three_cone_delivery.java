@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class three_cone_delivery extends LinearOpMode
+public class left_three_cone_delivery extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -229,7 +229,7 @@ public class three_cone_delivery extends LinearOpMode
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
                 .forward(8)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
                 .strafeRight(12.5)
                 .forward(3.5)
                 .build();
@@ -257,8 +257,8 @@ public class three_cone_delivery extends LinearOpMode
 
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
                 .forward(8)
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideLevel3();})
-                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.turnerSetPosition2();})
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
                 .strafeRight(12.5)
                 .forward(3.5)
                 .build();
@@ -270,14 +270,14 @@ public class three_cone_delivery extends LinearOpMode
         gripper.gripperOpen();
         TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
                 .back(3.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
                 .strafeRight(11)
                 .forward(45)
+                //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
                 .build();
 
         drive.followTrajectorySequence(traj8);
-        gripper.turnerSetPosition1();
-        sleep(500);
-        slideTrainer.setSlideLevel1();
 
 
 /*
