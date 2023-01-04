@@ -75,7 +75,7 @@ public class left_three_cone_delivery extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline2(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
@@ -268,63 +268,47 @@ public class left_three_cone_delivery extends LinearOpMode
         //Delivers the second cone
         sleep(100);
         gripper.gripperOpen();
-        TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
-                .back(3.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                .strafeRight(11)
-                .forward(45)
-                //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
-                .build();
 
-        drive.followTrajectorySequence(traj8);
-
-
-/*
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
-            sleep(500);
-            gripper.turnerSetPosition1();
-            sleep(100);
-            slideTrainer.setSlideLevel1();
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end()) // make sure to start at the end of traj 3
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end())
                     .back(3.5)
-                .build();
+                    .UNSTABLE_addTemporalMarkerOffset(0.1, ()->{gripper.turnerSetPosition1();})
+                    .UNSTABLE_addTemporalMarkerOffset(2, ()->{slideTrainer.setSlideLevel1();})
+                    .build();
 
-
-            drive.followTrajectorySequence(traj6); // left park from cone placement
-
-
-
+            drive.followTrajectorySequence(traj6);
 
 
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            sleep(100);
-        gripper.gripperOpen();
-        TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
-                .back(3.5)
-                .strafeRight(11)
-                .forward(23)
-                .build();
+            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
+                    .back(3.5)
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeRight(11)
+                    .forward(23)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .build();
 
-        drive.followTrajectorySequence(traj7);
-        gripper.turnerSetPosition1();
-        sleep(500);
-        slideTrainer.setSlideLevel1();
-
+            drive.followTrajectorySequence(traj7);
 
         }
         else if(tagOfInterest.id == RIGHT){
 
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj4.end())
-                    .strafeRight(0.3)
-                    .back(24.5)
+            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
+                    .back(3.5)
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeRight(11)
+                    .forward(45)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
                     .build();
 
-            drive.followTrajectorySequence(traj7);
+            drive.followTrajectorySequence(traj8);
+
 
 
         }
@@ -334,8 +318,6 @@ public class left_three_cone_delivery extends LinearOpMode
         else {
 
         }
-
- */
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
