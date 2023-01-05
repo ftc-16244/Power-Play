@@ -274,13 +274,15 @@ public class left_three_cone_delivery extends LinearOpMode
         if(tagOfInterest.id == LEFT) {
             TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end())
                     .back(3.5)
-                    .UNSTABLE_addTemporalMarkerOffset(0.1, ()->{gripper.turnerSetPosition1();})
-                    .UNSTABLE_addTemporalMarkerOffset(2, ()->{slideTrainer.setSlideLevel1();})
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeRight(11)
+                    .forward(23)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .back(23)
                     .build();
 
             drive.followTrajectorySequence(traj6);
-
-
         }
         else if(tagOfInterest.id == MIDDLE) {
 

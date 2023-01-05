@@ -208,12 +208,12 @@ public class right_three_cone_delivery extends LinearOpMode
         sleep(500);
         gripper.gripperOpen();
 //Travelling to the stack and grabs the second cone
-        /*
+
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
                 .back(5)
-                .strafeLeft(34)
+                .strafeRight(32.5)
                 .back(20)
                 .waitSeconds(0.5)
                 .back(9)
@@ -228,10 +228,10 @@ public class right_three_cone_delivery extends LinearOpMode
         //Positions the robot at the mid pole
         //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(8)
+                .forward(7.5)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
-                .strafeRight(12.5)
+                .strafeLeft(12.25)
                 .forward(3.5)
                 .build();
 
@@ -247,8 +247,8 @@ public class right_three_cone_delivery extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone4();})
                 .back(3.5)
-                .strafeLeft(12.5)
-                .back(8)
+                .strafeRight(12.25)
+                .back(7.5)
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.gripperClosed();})
                 .build();
 
@@ -257,10 +257,10 @@ public class right_three_cone_delivery extends LinearOpMode
         slideTrainer.setSlideCone6();
 
         TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
-                .forward(8)
+                .forward(7.5)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
-                .strafeRight(12.5)
+                .strafeLeft(12.35)
                 .forward(3.5)
                 .build();
 
@@ -269,63 +269,50 @@ public class right_three_cone_delivery extends LinearOpMode
         //Delivers the second cone
         sleep(100);
         gripper.gripperOpen();
-        TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
-                .back(3.5)
-                .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                .strafeRight(11)
-                .forward(45)
-                //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
-                .build();
-
-        drive.followTrajectorySequence(traj8);
 
 
-/*
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
-            sleep(500);
-            gripper.turnerSetPosition1();
-            sleep(100);
-            slideTrainer.setSlideLevel1();
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end()) // make sure to start at the end of traj 3
+            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
                     .back(3.5)
-                .build();
-
-
-            drive.followTrajectorySequence(traj6); // left park from cone placement
-
-
-
-
-
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeLeft(11)
+                    .forward(45)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
+                    .build();
+            drive.followTrajectorySequence(traj8);
+            
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            sleep(100);
-        gripper.gripperOpen();
-        TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
-                .back(3.5)
-                .strafeRight(11)
-                .forward(23)
-                .build();
+            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
+                    .back(3.5)
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeLeft(11)
+                    .forward(23)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .build();
 
-        drive.followTrajectorySequence(traj7);
-        gripper.turnerSetPosition1();
-        sleep(500);
-        slideTrainer.setSlideLevel1();
+            drive.followTrajectorySequence(traj7);
+
 
 
         }
         else if(tagOfInterest.id == RIGHT){
-
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj4.end())
-                    .strafeRight(0.3)
-                    .back(24.5)
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end())
+                    .back(3.5)
+                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+                    .strafeLeft(11)
+                    .forward(23)
+                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
+                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .back(23)
                     .build();
 
-            drive.followTrajectorySequence(traj7);
+            drive.followTrajectorySequence(traj6);
 
 
         }
@@ -335,8 +322,6 @@ public class right_three_cone_delivery extends LinearOpMode
         else {
 
         }
-
-         */
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
