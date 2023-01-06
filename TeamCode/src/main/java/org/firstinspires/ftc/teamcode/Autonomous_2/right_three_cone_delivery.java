@@ -283,7 +283,7 @@ public class right_three_cone_delivery extends LinearOpMode
                     .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
                     .build();
             drive.followTrajectorySequence(traj8);
-            
+
         }
         else if(tagOfInterest.id == MIDDLE) {
 
@@ -306,10 +306,10 @@ public class right_three_cone_delivery extends LinearOpMode
                     .back(3.5)
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
                     .strafeLeft(11)
-                    .forward(23)
+                    .forward(15)
                     //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
-                    .back(23)
+                    .back(15)
                     .build();
 
             drive.followTrajectorySequence(traj6);

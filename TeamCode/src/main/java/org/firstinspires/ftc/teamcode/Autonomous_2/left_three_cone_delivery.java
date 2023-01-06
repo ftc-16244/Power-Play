@@ -276,10 +276,10 @@ public class left_three_cone_delivery extends LinearOpMode
                     .back(3.5)
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
                     .strafeRight(11)
-                    .forward(23)
+                    .forward(15)
                     //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
-                    .back(23)
+                    .back(15)
                     .build();
 
             drive.followTrajectorySequence(traj6);
