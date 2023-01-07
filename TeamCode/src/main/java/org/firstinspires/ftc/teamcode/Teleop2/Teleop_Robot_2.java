@@ -110,21 +110,24 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
 
             if (gamepad1.dpad_right) {
+                slideTrainer.setSlideCone4();
 
             }
 
             if (gamepad1.dpad_up) {
+                slideTrainer.setSlideCone5();
 
 
             }
 
             if (gamepad1.dpad_down) {
+                slideTrainer.setSlideCone3();
 
 
             }
 
             if (gamepad1.dpad_left) {
-
+                slideTrainer.setSlideCone2();
             }
 
             if (gamepad1.back) {

@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Config
 @TeleOp(group = "Test")
-@Disabled
+//@Disabled
 //@Disabled
 public class TeleopLiftAndGripper<slideTrainerState> extends LinearOpMode {
 
