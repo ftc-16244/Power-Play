@@ -67,8 +67,9 @@ public class Teleop_Robot_2 extends LinearOpMode {
 
 
         // Move servos to start postion. Grippers open and track wheels up (for teleop)
-
-        gripper.turnerSetPosition1();//back
+        gripper.turnerSetPosition1();
+        sleep(1000);
+        slideTrainer.slideMechanicalReset();
         gripper.gripperOpen(); // for teleop start with the gripper open. for Auto is needs to be closed to hold the cone
         trkWhlLifters.trkWhlsUp(); // lift up for teleop put down for auto
 
