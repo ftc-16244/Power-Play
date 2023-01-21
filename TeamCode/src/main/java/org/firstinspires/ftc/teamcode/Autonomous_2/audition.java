@@ -212,8 +212,7 @@ public class audition extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
                 .back(5)
-                .strafeLeft(35)
-                .strafeRight(1.5)
+                .strafeLeft(33.5)
                 .back(20)
                 .waitSeconds(0.5)
                 .back(9)
@@ -234,7 +233,7 @@ public class audition extends LinearOpMode
                // .strafeRight(12.5)
                // .forward(3.5)
                 .strafeRight(11.25)
-                .forward(5)
+                .forward(6)
                 .build();
 
         drive.followTrajectorySequence(traj3);
@@ -245,7 +244,7 @@ public class audition extends LinearOpMode
 
 
 ////// Now decide where to park after cone placement
-/*
+
         if(tagOfInterest.id == LEFT) {
             TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj3.end())
                     .back(7)
@@ -262,10 +261,7 @@ public class audition extends LinearOpMode
         else if(tagOfInterest.id == MIDDLE) {
 
             TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(3.5)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                    .strafeRight(11)
-                    .forward(23)
+                    .strafeRight(1)
                     //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .build();
@@ -279,7 +275,7 @@ public class audition extends LinearOpMode
                     .back(3.5)
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
                     .strafeRight(11)
-                    .forward(45)
+                    .forward(25)
                     //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .addTemporalMarker(1.5,()->{slideTrainer.setSlideLevel1();})
                     .build();
