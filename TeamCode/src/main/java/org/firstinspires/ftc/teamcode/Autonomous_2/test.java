@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class audition extends LinearOpMode
+public class test extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -204,22 +204,23 @@ public class audition extends LinearOpMode
 
         drive.followTrajectorySequence(traj1);
 
+
         //Delivers the first cone
-        sleep(500);
+        sleep(100);
         gripper.gripperOpen();
 //Travelling to the stack and grabs the second cone
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
                 .back(5)
-                .strafeLeft(33.5)
-                .back(20)
-                .waitSeconds(0.5)
-                .back(9)
-                .UNSTABLE_addTemporalMarkerOffset(1.25,()->{gripper.gripperClosed();})
+                .strafeLeft(36)
+                .strafeRight(3)
+                .back(28.5)
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.gripperClosed();})
                 .build();
 
         drive.followTrajectorySequence(traj2);
+
 
         sleep(300);
         slideTrainer.setSlideCone6();
@@ -227,13 +228,10 @@ public class audition extends LinearOpMode
         //Positions the robot at the mid pole
         //Change 12.45 and 4 to appropriate numbers
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(29)
-                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel4();})
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
-               // .strafeRight(12.5)
-               // .forward(3.5)
-                .strafeRight(11.25)
-                .forward(6)
+                .forward(26)
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
+                .strafeRight(11)
+                .back(4)
                 .build();
 
         drive.followTrajectorySequence(traj3);
@@ -242,31 +240,53 @@ public class audition extends LinearOpMode
         sleep(100);
         gripper.gripperOpen();
 
+        //Travelling to the stack and grabs the third cone
+
+        TrajectorySequence traj4 = drive.trajectorySequenceBuilder(traj3.end())
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone4();})
+                .forward(4)
+                .strafeLeft(12)
+                .back(26)
+                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.gripperClosed();})
+                .build();
+
+        drive.followTrajectorySequence(traj4);
+        sleep(300);
+        slideTrainer.setSlideCone6();
+
+        TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj4.end())
+                .forward(26)
+                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
+                .strafeRight(12)
+                .back(3.5)
+                .build();
+
+        drive.followTrajectorySequence(traj5);
+
+
+        //Delivers the second cone
+        sleep(100);
+        gripper.gripperOpen();
 
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj5.end())
+                    .forward(5)
                     .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .back(25)
+                    .UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .build();
 
             drive.followTrajectorySequence(traj6);
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj5.end())
+                    .forward(5)
                     .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+                    .UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .build();
 
             drive.followTrajectorySequence(traj7);
@@ -274,14 +294,11 @@ public class audition extends LinearOpMode
         }
         else if(tagOfInterest.id == RIGHT){
 
-            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
+            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj5.end())
+                    .forward(5)
                     .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
                     .forward(25)
+                    .UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
                     .build();
 
             drive.followTrajectorySequence(traj8);
@@ -295,6 +312,9 @@ public class audition extends LinearOpMode
         else {
 
         }
+
+
+
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (!isStopRequested() && opModeIsActive());

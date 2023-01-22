@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class audition extends LinearOpMode
+public class UnstableMarkerTest extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -75,7 +75,7 @@ public class audition extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline2(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
@@ -194,106 +194,53 @@ public class audition extends LinearOpMode
         Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(startPose);
 
-        //Positions the robot at the low pole
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(15.5)
-                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
-                .forward(4)
+                .lineToLinearHeading(new Pose2d(15,0,Math.toRadians(90)))
+                .strafeRight(45)
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideLevel5();})
+                .back(4.1)
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{gripper.gripperOpen();})
+                .waitSeconds(1)
+                .forward(4.1)
+                .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
+                .strafeLeft(13)
+                .turn(Math.toRadians(180))
                 .build();
 
         drive.followTrajectorySequence(traj1);
-
-        //Delivers the first cone
-        sleep(500);
-        gripper.gripperOpen();
-//Travelling to the stack and grabs the second cone
-        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition1();})
-                .UNSTABLE_addTemporalMarkerOffset(1,()->{slideTrainer.setSlideCone5();})
-                .back(5)
-                .strafeLeft(33.5)
-                .back(20)
-                .waitSeconds(0.5)
-                .back(9)
-                .UNSTABLE_addTemporalMarkerOffset(1.25,()->{gripper.gripperClosed();})
-                .build();
-
-        drive.followTrajectorySequence(traj2);
-
-        sleep(300);
-        slideTrainer.setSlideCone6();
-
-        //Positions the robot at the mid pole
-        //Change 12.45 and 4 to appropriate numbers
-        TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
-                .forward(29)
-                .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel4();})
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})
-               // .strafeRight(12.5)
-               // .forward(3.5)
-                .strafeRight(11.25)
-                .forward(6)
-                .build();
-
-        drive.followTrajectorySequence(traj3);
-
-        //Delivers the second cone
-        sleep(100);
-        gripper.gripperOpen();
 
 
 ////// Now decide where to park after cone placement
 
         if(tagOfInterest.id == LEFT) {
-            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                    .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
-                    .back(25)
-                    .build();
 
-            drive.followTrajectorySequence(traj6);
+            TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj1.end()) // make sure to start at the end of traj 3
+                    .strafeRight(0.3)
+                    .build();
+            drive.followTrajectorySequence(traj5); // left park from cone placement
+
+
         }
         else if(tagOfInterest.id == MIDDLE) {
 
-            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                    .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
+            TrajectorySequence traj6 = drive.trajectorySequenceBuilder(traj1.end())
                     .build();
-
-            drive.followTrajectorySequence(traj7);
-
+            drive.followTrajectorySequence(traj6);
         }
         else if(tagOfInterest.id == RIGHT){
-
-            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj3.end())
-                    .back(7)
-                    .UNSTABLE_addTemporalMarkerOffset(0, ()->{gripper.turnerSetPosition1();})
-                    .strafeRight(12)
-                    //.forward(15)
-                    //.UNSTABLE_addTemporalMarkerOffset(0.1, ()->{slideTrainer.setSlideLevel1();})
-                    .addTemporalMarker(1,()->{slideTrainer.setSlideLevel1();})
-                    .forward(25)
+            TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj1.end())
                     .build();
-
-            drive.followTrajectorySequence(traj8);
-
-
-
+            drive.followTrajectorySequence(traj7);
         }
 
         // make sure to have a null case to try and park if you dont see a tag
-
         else {
 
+            TrajectorySequence traj8 = drive.trajectorySequenceBuilder(traj1.end())
+                    // go park in the middle
+                    .build();
+
+            drive.followTrajectorySequence(traj8);
         }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
