@@ -10,11 +10,11 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class Regional_BlueLeftAuto {
     public static void main(String[] args) {
         MeepMeep meepMeep =         new MeepMeep(800);
-        Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(-180));
-        Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(-180));
-        Pose2d SignalDropOff =      new Pose2d(34,15,Math.toRadians(-180));
-        Pose2d BlueStack =          new Pose2d(63,12,Math.toRadians(-180));
-        Pose2d BlueStackStaging =    new Pose2d(52,12,Math.toRadians(-180));
+        Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(180));
+        Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(180));
+        Pose2d SignalDropOff =      new Pose2d(34,15,Math.toRadians(180));
+        Pose2d BlueStack =          new Pose2d(63,12,Math.toRadians(180));
+        Pose2d BlueStackStaging =   new Pose2d(52,12,Math.toRadians(180));
         Pose2d BlueSecondJunct =    new Pose2d(29,17,Math.toRadians(140));
         Pose2d Park3 =              new Pose2d(12,12,Math.toRadians(180));
 
