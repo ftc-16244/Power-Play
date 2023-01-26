@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class FieldCoordinateExample extends LinearOpMode
+public class FieldCoordinateExample2 extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -205,50 +205,57 @@ public class FieldCoordinateExample extends LinearOpMode
         //Positions the robot at the low pole
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(BlueLeftStart)
                 .lineToSplineHeading(BlueLeftFirstJunct)
-                .addTemporalMarker(0.0, ()->{slideTrainer.setSlideLevel3();})
-                .addTemporalMarker(0.5,()->{gripper.turnerSetPosition2();})
+                //lift and turner
                 .forward(4)
-                .waitSeconds(.25) //
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperOpen();})
-                .waitSeconds(.25) //
+                // open gripper
+                .waitSeconds(1) //
                 .back(5)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.turnerSetPosition1();})
-                .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideCone5();})
+                // lower lift
+                // strafe and push signal ut of the way
                 .lineToSplineHeading(SignalDropOff)
-                //arrive to get second auto cone
+                .splineToLinearHeading(BlueStack, Math.toRadians(0))
+                .waitSeconds(1) //
+                .lineToSplineHeading(BlueStackStaging)
+                // go to second junction (med goal)
+                // raise lift
+                .splineToSplineHeading(BlueSecondJunct, Math.toRadians(180))
+                .waitSeconds(1) //
+                // open gripper
+                // go get another cone
+                //turn the turner and lower the lift
+                //.splineToSplineHeading(BlueStackStaging, Math.toRadians(180))
+                .lineToSplineHeading(BlueStackStaging)
                 .lineToSplineHeading(BlueStack)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
-                .waitSeconds(.15)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
-                .UNSTABLE_addTemporalMarkerOffset(0.2,()->{slideTrainer.setSlideCone6();})
-                .waitSeconds(0.5)
-                .splineToLinearHeading(BlueStackStaging, Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{slideTrainer.setSlideLevel4();})
-                .UNSTABLE_addTemporalMarkerOffset(0.6,()->{gripper.turnerSetPosition2();})
-                .lineToSplineHeading(BlueSecondJunct)
-                .waitSeconds(.25)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperOpen();})
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
-                //second cone delivered rest for cone 3
-                .UNSTABLE_addTemporalMarkerOffset(0.3,()->{gripper.turnerSetPosition1();})
-                .UNSTABLE_addTemporalMarkerOffset(1.0,()->{slideTrainer.setSlideCone3();})
+                .waitSeconds(1) //
+                //repeat for one 3
+                .lineToSplineHeading(BlueStackStaging)
+                // go to second junction (med goal)
+                // raise lift
+                .splineToSplineHeading(BlueSecondJunct, Math.toRadians(180))
+                .waitSeconds(1) //
+                // open gripper
+                // go get another cone
+                //turn the turner and lower the lift
+                .lineToSplineHeading(BlueStackStaging)
                 .lineToSplineHeading(BlueStack)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
-                .waitSeconds(.15)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
-                .UNSTABLE_addTemporalMarkerOffset(0.2,()->{slideTrainer.setSlideCone6();})
-                .waitSeconds(0.5)
-                .splineToLinearHeading(BlueStackStaging, Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{slideTrainer.setSlideLevel4();})
-                .UNSTABLE_addTemporalMarkerOffset(0.7,()->{gripper.turnerSetPosition2();})
-                .lineToSplineHeading(BlueSecondJunct)
-                .waitSeconds(.25)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperOpen();})
-                .UNSTABLE_addTemporalMarkerOffset(0.3,()->{gripper.turnerSetPosition1();})
-                .UNSTABLE_addTemporalMarkerOffset(1.0,()->{slideTrainer.setSlideLevel3();})
+                .waitSeconds(1) //
+                //repeat for one 4
+                .lineToSplineHeading(BlueStackStaging)
+                // go to second junction (med goal)
+                // raise lift
+                .splineToSplineHeading(BlueSecondJunct,Math.toRadians(180))
+                .waitSeconds(1) //
+                // open gripper
+                // go get another cone
+                //turn the turner and lower the lift
+                .lineToSplineHeading(BlueStackStaging)
+                .lineToSplineHeading(Park3)
 
                 .build();
-        drive.followTrajectorySequence(traj1);
+
+                drive.followTrajectorySequence((traj1));
+
+
 
 ////// Now decide where to park after cone placement
 
