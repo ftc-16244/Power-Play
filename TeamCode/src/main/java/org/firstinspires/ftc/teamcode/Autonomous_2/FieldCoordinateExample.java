@@ -215,7 +215,9 @@ public class FieldCoordinateExample extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.turnerSetPosition1();})
                 .UNSTABLE_addTemporalMarkerOffset(0.5,()->{slideTrainer.setSlideCone5();})
                 .lineToSplineHeading(SignalDropOff)
-                //arrive to get second auto cone
+                //after pshing the signal away go fot the nex cone
+
+        TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
                 .lineToSplineHeading(BlueStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .waitSeconds(.15)
