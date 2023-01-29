@@ -28,11 +28,11 @@ public class Slide_Trainer2 {
 
     //Constants Lift
     public  static double           SLIDELIFTSPEED                  = 0.70; //
-    public  static double           SLIDELIFTSPEEDSLOWER            = 0.4; //
+    public  static double           SLIDELIFTSPEEDSLOWER            = 0.5; //
     public static  double           SLIDERESETSPEED                 = -0.2; //
     public static final double      SLIDE_LEVEL_1                   = 0; // inches Load cone level
     public static final double      SLIDE_LEVEL_2                   = 2; // inches ground junction
-    public static final double      SLIDE_LEVEL_3                   = 13; // inches 12" Junction
+    public static final double      SLIDE_LEVEL_3                   = 13.5; // inches 12" Junction
     public static final double      SLIDE_LEVEL_4                   = 23; // inches 24" Junction
     public static final double      SLIDE_LEVEL_5                   = 32.5; // inches 33" Junction
     public static final double      TURNER_MIN_HEIGHT_2_ROTATE      = 11; // preventes turner from moving if it will hit the control hubd
