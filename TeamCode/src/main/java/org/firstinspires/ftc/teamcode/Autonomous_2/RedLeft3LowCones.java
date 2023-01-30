@@ -76,7 +76,7 @@ public class RedLeft3LowCones extends LinearOpMode
     Pose2d RedLeftFirstJunct = new Pose2d(-34,-45.5,Math.toRadians(0));
     Pose2d RedLeftSecondJunct = new Pose2d(-36,-24,Math.toRadians(0));
     Pose2d RedLineEntry      = new Pose2d(-36,-12,Math.toRadians(0));
-    Pose2d SignalDropOff =      new Pose2d(-36,-11,Math.toRadians(0));
+    Pose2d SignalDropOff =      new Pose2d(-36,-11.0,Math.toRadians(0));
     Pose2d RedStack =          new Pose2d(-63,-11.5,Math.toRadians(0));
 
     Pose2d Park3 =              new Pose2d(-12,-36,Math.toRadians(0));
