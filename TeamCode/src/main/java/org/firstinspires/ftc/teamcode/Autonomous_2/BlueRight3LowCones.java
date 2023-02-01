@@ -40,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class BlueLeft3LowCones extends LinearOpMode
+public class BlueRight3LowCones extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -71,19 +71,21 @@ public class BlueLeft3LowCones extends LinearOpMode
 
     // Define preset points to save coding time
     // these values are for the blue alliance left hand side
-    Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(180));
-    Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(180));
-    Pose2d BlueLeftSecondJunct = new Pose2d(36,24,Math.toRadians(180));
-    Pose2d BlueLineEntry      = new Pose2d(36,12,Math.toRadians(180));
-    Pose2d SignalDropOff =      new Pose2d(36,11,Math.toRadians(180));
-    Pose2d BlueStack =          new Pose2d(63,11.5,Math.toRadians(180));
-    Pose2d BlueStackStaging =   new Pose2d(52,12,Math.toRadians(180));
-    Pose2d BlueSecondJunct =    new Pose2d(52,24,Math.toRadians(140));
-    Pose2d Park3 =              new Pose2d(12,36,Math.toRadians(180));
-    Pose2d Park2 =              new Pose2d(36,36,Math.toRadians(180));
-    Pose2d Park1 =              new Pose2d(60,36,Math.toRadians(180));
+    Pose2d BlueRightStart =      new Pose2d(-34,61,Math.toRadians(0));
+    Pose2d BlueRightFirstJunct = new Pose2d(-34,45.5,Math.toRadians(0));
+    Pose2d BlueLeftSecondJunct = new Pose2d(-36,24,Math.toRadians(0));
+    Pose2d BlueLineEntry      = new Pose2d(-36,12,Math.toRadians(0));
+    Pose2d SignalDropOff =      new Pose2d(-36,10,Math.toRadians(0));
+    Pose2d BlueStack =          new Pose2d(-63,11.5,Math.toRadians(0));
+    Pose2d BlueStackStaging =   new Pose2d(-52,12,Math.toRadians(0));
+    Pose2d BlueSecondJunct =    new Pose2d(-52,24,Math.toRadians(40));
+    Pose2d Park3 =              new Pose2d(-12,36,Math.toRadians(0));
+    Pose2d Park2 =              new Pose2d(-36,36,Math.toRadians(0));
+    Pose2d Park1 =              new Pose2d(-60,36,Math.toRadians(0));
 
+/*
 
+ */
     @Override
     public void runOpMode()
     {
@@ -93,7 +95,7 @@ public class BlueLeft3LowCones extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline2(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
@@ -206,11 +208,11 @@ public class BlueLeft3LowCones extends LinearOpMode
 
 
         //Pose2d startPose = new Pose2d(0, 0, 0);
-        drive.setPoseEstimate(BlueLeftStart);
+        drive.setPoseEstimate(BlueRightStart);
 
         //Positions the robot at the low pole
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(BlueLeftStart)
-                .lineToLinearHeading(BlueLeftFirstJunct)
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(BlueRightStart)
+                .lineToLinearHeading(BlueRightFirstJunct)
                 .addTemporalMarker(0.0, ()->{slideTrainer.setSlideLevel3();})
                 .addTemporalMarker(0.5,()->{gripper.turnerSetPosition2();})
                 .forward(4)
@@ -225,7 +227,7 @@ public class BlueLeft3LowCones extends LinearOpMode
                 .build();
 
         drive.followTrajectorySequence(traj1);
-
+/*
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
 
                 .lineToLinearHeading(BlueStack)

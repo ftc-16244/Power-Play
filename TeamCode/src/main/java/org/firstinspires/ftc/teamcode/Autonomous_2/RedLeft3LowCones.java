@@ -229,7 +229,7 @@ public class RedLeft3LowCones extends LinearOpMode
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
 
                 .lineToLinearHeading(RedStack)
-                .waitSeconds(.15)
+                //.waitSeconds(.15)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
