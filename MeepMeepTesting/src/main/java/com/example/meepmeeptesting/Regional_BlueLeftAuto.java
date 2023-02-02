@@ -10,13 +10,21 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class Regional_BlueLeftAuto {
     public static void main(String[] args) {
         MeepMeep meepMeep =         new MeepMeep(800);
-        Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(180));
-        Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(180));
-        Pose2d SignalDropOff =      new Pose2d(34,15,Math.toRadians(180));
-        Pose2d BlueStack =          new Pose2d(63,12,Math.toRadians(180));
-        Pose2d BlueStackStaging =   new Pose2d(52,12,Math.toRadians(180));
-        Pose2d BlueSecondJunct =    new Pose2d(29,17,Math.toRadians(140));
-        Pose2d Park3 =              new Pose2d(12,12,Math.toRadians(180));
+        Pose2d BlueRightStart =      new Pose2d(-34,61,Math.toRadians(0));
+        Pose2d BlueRightFirstJunct = new Pose2d(-34,45.5,Math.toRadians(0));
+        Pose2d BlueLeftSecondJunct = new Pose2d(-36,24,Math.toRadians(0));
+        Pose2d BlueLineEntry      = new Pose2d(-36,12,Math.toRadians(0));
+        Pose2d SignalDropOff =      new Pose2d(-36,10,Math.toRadians(0));
+        Pose2d BlueStack =          new Pose2d(-63,11.5,Math.toRadians(0));
+        Pose2d BlueStackStaging =   new Pose2d(-52,12,Math.toRadians(0));
+        Pose2d BlueSecondJunct =    new Pose2d(-52,24,Math.toRadians(40));
+        Pose2d Park3 =              new Pose2d(-12,36,Math.toRadians(0));
+        Pose2d Park2 =              new Pose2d(-36,36,Math.toRadians(0));
+        Pose2d Park1 =              new Pose2d(-60,36,Math.toRadians(0));
+
+
+
+
 
         // Declare our first bot
         //Blue Left Start Pose
@@ -25,54 +33,22 @@ public class Regional_BlueLeftAuto {
                 // We set this bot to be blue
                 .setColorScheme(new ColorSchemeBlueDark())
                 .setConstraints(40, 30, Math.toRadians(180), Math.toRadians(180), 13)
+
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(BlueLeftStart)
-                                .lineToSplineHeading(BlueLeftFirstJunct)
+                        drive.trajectorySequenceBuilder(BlueRightStart)
+
+                                .lineToSplineHeading(BlueRightFirstJunct)
                                 //lift and turner
                                 .forward(4)
                                 // open gripper
                                 .waitSeconds(1) //
+                                .waitSeconds(.15) //
+
+                                .waitSeconds(.15) //
                                 .back(5)
-                                // lower lift
-                                // strafe and push signal ut of the way
-                                .lineToSplineHeading(SignalDropOff)
-                                .splineToLinearHeading(BlueStack, Math.toRadians(0))
-                                .waitSeconds(1) //
-                                .lineToSplineHeading(BlueStackStaging)
-                                // go to second junction (med goal)
-                                // raise lift
-                                .splineToSplineHeading(BlueSecondJunct, Math.toRadians(180))
-                                .waitSeconds(1) //
-                                // open gripper
-                                // go get another cone
-                                //turn the turner and lower the lift
-                                //.splineToSplineHeading(BlueStackStaging, Math.toRadians(180))
-                                .lineToSplineHeading(BlueStackStaging)
-                                .lineToSplineHeading(BlueStack)
-                                .waitSeconds(1) //
-                                //repeat for one 3
-                                .lineToSplineHeading(BlueStackStaging)
-                                // go to second junction (med goal)
-                                // raise lift
-                                .splineToSplineHeading(BlueSecondJunct, Math.toRadians(180))
-                                .waitSeconds(1) //
-                                // open gripper
-                                // go get another cone
-                                //turn the turner and lower the lift
-                                .lineToSplineHeading(BlueStackStaging)
-                                .lineToSplineHeading(BlueStack)
-                                .waitSeconds(1) //
-                                //repeat for one 4
-                                .lineToSplineHeading(BlueStackStaging)
-                                // go to second junction (med goal)
-                                // raise lift
-                                .splineToSplineHeading(BlueSecondJunct,Math.toRadians(180))
-                                .waitSeconds(1) //
-                                // open gripper
-                                // go get another cone
-                                //turn the turner and lower the lift
-                                .lineToSplineHeading(BlueStackStaging)
-                                .lineToSplineHeading(Park3)
+
+                                .lineToLinearHeading(SignalDropOff)
+
 
 
                                 .build()
@@ -84,7 +60,7 @@ public class Regional_BlueLeftAuto {
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(40, 30, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(BlueLeftStart)
+                        drive.trajectorySequenceBuilder(BlueRightStart )
                                 .strafeLeft(15.5)
                                 //.UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                                 //.UNSTABLE_addTemporalMarkerOffset(0.5,()->{gripper.turnerSetPosition2();})

@@ -71,14 +71,14 @@ public class BlueRight3LowCones extends LinearOpMode
 
     // Define preset points to save coding time
     // these values are for the blue alliance left hand side
-    Pose2d BlueRightStart =      new Pose2d(-34,61,Math.toRadians(0));
-    Pose2d BlueRightFirstJunct = new Pose2d(-34,45.5,Math.toRadians(0));
-    Pose2d BlueLeftSecondJunct = new Pose2d(-36,24,Math.toRadians(0));
-    Pose2d BlueLineEntry      = new Pose2d(-36,12,Math.toRadians(0));
-    Pose2d SignalDropOff =      new Pose2d(-36,10,Math.toRadians(0));
-    Pose2d BlueStack =          new Pose2d(-63,11.5,Math.toRadians(0));
-    Pose2d BlueStackStaging =   new Pose2d(-52,12,Math.toRadians(0));
-    Pose2d BlueSecondJunct =    new Pose2d(-52,24,Math.toRadians(40));
+    Pose2d BlueRightStart       =   new Pose2d(-34,61,Math.toRadians(0));
+    Pose2d BlueRightFirstJunct  =   new Pose2d(-34,45.5,Math.toRadians(0));
+    Pose2d BlueRightSecondJunct  =   new Pose2d(-36,24,Math.toRadians(0));
+    Pose2d BlueLineEntry        =   new Pose2d(-36,12,Math.toRadians(0));
+    Pose2d SignalDropOff        =   new Pose2d(-36,16,Math.toRadians(0));
+    Pose2d BlueStack            =   new Pose2d(-60,11.5,Math.toRadians(0));
+    Pose2d BlueStackStaging     =   new Pose2d(-52,12,Math.toRadians(0));
+    Pose2d BlueSecondJunct      =   new Pose2d(-52,24,Math.toRadians(40));
     Pose2d Park3 =              new Pose2d(-12,36,Math.toRadians(0));
     Pose2d Park2 =              new Pose2d(-36,36,Math.toRadians(0));
     Pose2d Park1 =              new Pose2d(-60,36,Math.toRadians(0));
@@ -210,7 +210,7 @@ public class BlueRight3LowCones extends LinearOpMode
         //Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(BlueRightStart);
 
-        //Positions the robot at the low pole
+        //Positions the start point
         TrajectorySequence traj1 = drive.trajectorySequenceBuilder(BlueRightStart)
                 .lineToLinearHeading(BlueRightFirstJunct)
                 .addTemporalMarker(0.0, ()->{slideTrainer.setSlideLevel3();})
@@ -227,7 +227,7 @@ public class BlueRight3LowCones extends LinearOpMode
                 .build();
 
         drive.followTrajectorySequence(traj1);
-/*
+
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
 
                 .lineToLinearHeading(BlueStack)
@@ -238,11 +238,12 @@ public class BlueRight3LowCones extends LinearOpMode
                 .waitSeconds(.15)
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .lineToLinearHeading(BlueLeftSecondJunct)
+                .lineToLinearHeading(BlueRightSecondJunct)
+                .waitSeconds(.15)
                 .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
-
+                .waitSeconds(.15)
                 .build();
 
        drive.followTrajectorySequence(traj2);
@@ -260,7 +261,7 @@ public class BlueRight3LowCones extends LinearOpMode
                 .waitSeconds(.15)
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .lineToLinearHeading(BlueLeftSecondJunct)
+                .lineToLinearHeading(BlueRightSecondJunct)
                 .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
