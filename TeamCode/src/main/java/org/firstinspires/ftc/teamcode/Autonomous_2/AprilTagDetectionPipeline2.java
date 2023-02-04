@@ -21,6 +21,8 @@
 
 package org.firstinspires.ftc.teamcode.Autonomous_2;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import org.opencv.calib3d.Calib3d;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -36,7 +38,7 @@ import org.openftc.apriltag.AprilTagDetectorJNI;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
-
+@Disabled
 class AprilTagDetectionPipeline2 extends OpenCvPipeline
 {
     private long nativeApriltagPtr;
