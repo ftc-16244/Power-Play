@@ -23,6 +23,9 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
 
     ElapsedTime runtime = new ElapsedTime();
+
+    ElapsedTime turnerTimer = new ElapsedTime();
+
     private ElapsedTime teleopTimer = new ElapsedTime();
     private double TELEOP_TIME_OUT = 130;
 
@@ -35,11 +38,9 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
     TrackingWheelLifters trkWhlLifters = new TrackingWheelLifters(this);
 
-    private TurnerState turnerState = TurnerState.DISABLED; //
-    private TurnerPosition turnerPos = TurnerPosition.BACK; //
 
     //ENUMS
-    enum LiftState {
+    public enum LiftState {
         LIFT_UNKNOWN,
         LIFT_IDLE,
         LIFT_GET_CONE,
@@ -50,15 +51,13 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
         LIFT_TURNER_BACK,
         LIFT_HOLD
         }
-    enum TurnerState {
-        ENABLED,
-        DISABLED}
-
-    enum TurnerPosition {
+    public enum TurnerState {
         FORWARD,
         BACK}
 
+
     LiftState liftState = LiftState.LIFT_UNKNOWN;
+    TurnerState turnerState;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -85,14 +84,16 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
         slideTrainer.slideMechanicalReset();
 
         liftState = LiftState.LIFT_IDLE;
+        turnerState = TurnerState.BACK;
+        turnerTimer.reset();
 
         gripper.gripperOpen(); // for teleop start with the gripper open. for Auto is needs to be closed to hold the cone
         trkWhlLifters.trkWhlsUp(); // lift up for teleop put down for auto
 
         // Telemetry
         telemetry.addData("Lift State", slideTrainerState);
-        telemetry.addData("Turner State", turnerState);
-        telemetry.addData("Turner Position", turnerPos);
+        //telemetry.addData("Turner State", turnerState);
+        //telemetry.addData("Turner Position", turnerPos);
         dashboard = FtcDashboard.getInstance();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -111,20 +112,6 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                             Math.pow(-gamepad1.right_stick_x,expo) * speedFactor
                     )
             );
-
-            // get slide height each time thhrouhg the loop to decide if turner can be used or not
-            // this returns height in inches
-            slidePosition = slideTrainer.getSlidePos();
-
-
-            if (slidePosition <= slideTrainer.TURNER_MIN_HEIGHT_2_ROTATE){
-                turnerState = TurnerState.DISABLED;
-
-            }
-            else { turnerState = TurnerState.ENABLED;
-
-            }
-
 
             if (gamepad1.dpad_right) {
                 slideTrainer.setSlideCone4();
@@ -165,36 +152,120 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                 gripper.gripperClosed();
             }
 //// GAMEPAD #2/////////////////////////
-            if (gamepad2.a  &&  turnerState == TurnerState.ENABLED) {
-                gripper.turnerSetPosition1();
-                turnerPos=TurnerPosition.BACK; // sets state to back after requesting a servo move to the back
+
+            switch(liftState) {
+                case LIFT_IDLE:
+                    //do nothing, waiting for driver input
+
+                    //event and exit condition
+                    if (gamepad2.dpad_right) {
+                        slideTrainer.setSlideLevel5();
+                        liftState = LiftState.LIFT_HIGH;
+                    }
+                    else if (gamepad2.dpad_up) {
+                        slideTrainer.setSlideLevel4();
+                        liftState = LiftState.LIFT_MED;
+                    }
+                    else if (gamepad2.dpad_left) {
+                        slideTrainer.setSlideLevel3();
+                        liftState = LiftState.LIFT_LOW;
+                    }
+                    else if (gamepad2.left_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
+                        slideTrainer.setSlideLevel1();
+                        liftState = LiftState.LIFT_GET_CONE;
+                    }
+                    break;
+
+                case LIFT_HIGH:
+                    //action: check if height is within half inch of target, if not wait until it is
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 0.5) {
+                        if (turnerState != TurnerState.FORWARD) {
+                            turnerTimer.reset();
+                            gripper.turnerSetPosition2(); //fwd
+                            liftState = LiftState.LIFT_TURNER_FRONT;
+                        }
+                        else {
+                            liftState = LiftState.LIFT_HOLD;
+                        }
+                    }
+                    break;
+
+                case LIFT_MED:
+                    //action: check if height is within half inch of target, if not wait until it is
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_4) < 0.5) {
+                        if (turnerState != TurnerState.FORWARD) {
+                            turnerTimer.reset();
+                            gripper.turnerSetPosition2(); //fwd
+                            liftState = LiftState.LIFT_TURNER_FRONT;
+                        }
+                        else {
+                            liftState = LiftState.LIFT_HOLD;
+                        }
+                    }
+                    break;
+
+                case LIFT_LOW:
+                    //action: check if height is within half inch of target, if not wait until it is
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_3) < 0.5) {
+                        if (turnerState != TurnerState.FORWARD) {
+                            turnerTimer.reset();
+                            gripper.turnerSetPosition2(); //fwd
+                            liftState = LiftState.LIFT_TURNER_FRONT;
+                        }
+                        else {
+                            liftState = LiftState.LIFT_HOLD;
+                        }
+                    }
+                    break;
+
+                case LIFT_TURNER_FRONT:
+                    //action: check if enough time has passed to turn
+                    if (turnerTimer.seconds() >= 0.3) {
+                        turnerState = TurnerState.FORWARD;
+                        liftState = LiftState.LIFT_HOLD;
+                    }
+                    break;
+
+                case LIFT_HOLD:
+                    if (gamepad2.left_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
+                        turnerTimer.reset();
+                        gripper.turnerSetPosition1(); //back
+                        liftState = LiftState.LIFT_TURNER_BACK;
+                    }
+                    else if (gamepad2.dpad_right) {
+                        slideTrainer.setSlideLevel5();
+                        liftState = LiftState.LIFT_HIGH;
+                    }
+                    else if (gamepad2.dpad_up) {
+                        slideTrainer.setSlideLevel4();
+                        liftState = LiftState.LIFT_MED;
+                    }
+                    else if (gamepad2.dpad_left) {
+                        slideTrainer.setSlideLevel3();
+                        liftState = LiftState.LIFT_LOW;
+                    }
+                    break;
+
+                case LIFT_TURNER_BACK:
+                    //action: check if enough time has passed to turn
+                    if (turnerTimer.seconds() >= 0.3) {
+                        turnerState = TurnerState.BACK;
+                        slideTrainer.setSlideLevel1(); //this function already has lower power on way down
+                        liftState = LiftState.LIFT_GET_CONE;
+                    }
+                    break;
+
+                case LIFT_GET_CONE:
+                    //action: check if the lift is within half inch of fully lowered
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_1) < 0.5) {
+                        slideTrainer.slidemotorback.setPower(0);
+                        slideTrainer.slidemotorfront.setPower(0);
+                        liftState = LiftState.LIFT_IDLE;
+                    }
+                    break;
+
             }
 
-            if (gamepad2.y  &&  turnerState == TurnerState.ENABLED) {
-                gripper.turnerSetPosition2();
-                turnerPos=TurnerPosition.FORWARD; //
-            }
-
-
-            if (gamepad2.dpad_left) {
-                slideTrainer.setSlideLevel3();
-            }
-
-            if (gamepad2.dpad_up) {
-                slideTrainer.setSlideLevel4();
-            }
-
-            if (gamepad2.dpad_right) {
-                slideTrainer.setSlideLevel5();
-            }
-            // this makes sure the gripper is in the back position before lowering. Otherwise ir hits the front of the robot chassis
-            if (gamepad2.left_trigger > 0.25 && turnerPos == TurnerPosition.BACK) {
-                slideTrainer.setSlideLevel2();
-            }
-
-            if (gamepad2.right_trigger > 0.25 && turnerPos == TurnerPosition.BACK) {
-                slideTrainer.setSlideLevel1();
-            }
 
             if (gamepad2.back) {
                 slideTrainer.slideMechanicalReset();
