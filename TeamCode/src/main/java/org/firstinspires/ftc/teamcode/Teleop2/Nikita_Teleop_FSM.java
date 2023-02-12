@@ -58,6 +58,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
     LiftState liftState = LiftState.LIFT_UNKNOWN;
     TurnerState turnerState;
+    boolean heightLow;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -85,6 +86,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
         liftState = LiftState.LIFT_IDLE;
         turnerState = TurnerState.BACK;
+        heightLow = false;
         turnerTimer.reset();
 
         gripper.gripperOpen(); // for teleop start with the gripper open. for Auto is needs to be closed to hold the cone
@@ -92,8 +94,8 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
         // Telemetry
         telemetry.addData("Lift State", slideTrainerState);
-        //telemetry.addData("Turner State", turnerState);
-        //telemetry.addData("Turner Position", turnerPos);
+        telemetry.addData("Turner State", turnerState);
+        telemetry.addData("Height Low", heightLow);
         dashboard = FtcDashboard.getInstance();
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -153,6 +155,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
             }
 //// GAMEPAD #2/////////////////////////
 
+
             switch(liftState) {
                 case LIFT_IDLE:
                     //do nothing, waiting for driver input
@@ -177,6 +180,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     break;
 
                 case LIFT_HIGH:
+
                     //action: check if height is within half inch of target, if not wait until it is
                     if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 0.5) {
                         if (turnerState != TurnerState.FORWARD) {
@@ -207,6 +211,9 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                 case LIFT_LOW:
                     //action: check if height is within half inch of target, if not wait until it is
                     if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_3) < 0.5) {
+
+                        heightLow = true;
+
                         if (turnerState != TurnerState.FORWARD) {
                             turnerTimer.reset();
                             gripper.turnerSetPosition2(); //fwd
@@ -235,10 +242,12 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     else if (gamepad2.dpad_right) {
                         slideTrainer.setSlideLevel5();
                         liftState = LiftState.LIFT_HIGH;
+                        heightLow = false;
                     }
                     else if (gamepad2.dpad_up) {
                         slideTrainer.setSlideLevel4();
                         liftState = LiftState.LIFT_MED;
+                        heightLow = false;
                     }
                     else if (gamepad2.dpad_left) {
                         slideTrainer.setSlideLevel3();
@@ -247,11 +256,16 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     break;
 
                 case LIFT_TURNER_BACK:
+                    double timeValue = 0.3;
                     //action: check if enough time has passed to turn
-                    if (turnerTimer.seconds() >= 0.3) {
+                    if (heightLow == true) {
+                        timeValue = 2;
+                    }
+                    if (turnerTimer.seconds() >= timeValue) {
                         turnerState = TurnerState.BACK;
                         slideTrainer.setSlideLevel1(); //this function already has lower power on way down
                         liftState = LiftState.LIFT_GET_CONE;
+                        heightLow = false;
                     }
                     break;
 
@@ -265,7 +279,6 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     break;
 
             }
-
 
             if (gamepad2.back) {
                 slideTrainer.slideMechanicalReset();
