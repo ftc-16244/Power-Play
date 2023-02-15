@@ -111,7 +111,7 @@ public class Teleop_Robot_LED extends LinearOpMode {
           // this returns height in inches
           slidePosition = slideTrainer.getSlidePos();
 
-          if (teleopTimer.time() > 15){
+          if (teleopTimer.time() > 25){
               blinkinLedDriver .setPattern(patternEndGame);
           }
           if (slidePosition <= slideTrainer.TURNER_MIN_HEIGHT_2_ROTATE){
