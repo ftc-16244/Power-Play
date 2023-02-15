@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -28,6 +29,12 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
     private ElapsedTime teleopTimer = new ElapsedTime();
     private double TELEOP_TIME_OUT = 130;
+
+    RevBlinkinLedDriver blinkinLedDriver;
+    RevBlinkinLedDriver .BlinkinPattern pattern;
+    RevBlinkinLedDriver .BlinkinPattern pattern2;
+    RevBlinkinLedDriver .BlinkinPattern patternEndGame;
+
 
     FtcDashboard dashboard;
 
@@ -65,6 +72,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
 
         // set up local variables
+
         double  slidePosition;
         double  speedFactor = 1.0;
         double expo =   3; // has to be 1 or 3
@@ -78,6 +86,11 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
         gripper.init(hardwareMap);
         trkWhlLifters.init(hardwareMap);
 
+        blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver .class, "blinkin");
+        pattern  = RevBlinkinLedDriver .BlinkinPattern.HEARTBEAT_BLUE;
+        pattern2 = RevBlinkinLedDriver .BlinkinPattern.LAWN_GREEN;
+        patternEndGame = RevBlinkinLedDriver .BlinkinPattern.HEARTBEAT_RED;
+        blinkinLedDriver .setPattern(pattern);
 
         // Move servos to start postion. Grippers open and track wheels up (for teleop)
         gripper.turnerSetPosition1();
@@ -93,6 +106,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
         trkWhlLifters.trkWhlsUp(); // lift up for teleop put down for auto
 
         // Telemetry
+
         telemetry.addData("Lift State", slideTrainerState);
         telemetry.addData("Turner State", turnerState);
         telemetry.addData("Height Low", heightLow);
@@ -105,6 +119,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
         ///////////////////////////////////////////////////////////////////////////////////////////
 
         waitForStart();
+        blinkinLedDriver .setPattern(pattern2);
 
         while (!isStopRequested() && teleopTimer.time() < TELEOP_TIME_OUT) {
             drive.setWeightedDrivePower(
@@ -114,6 +129,11 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                             Math.pow(-gamepad1.right_stick_x,expo) * speedFactor
                     )
             );
+
+            if (teleopTimer.time() > 25){
+                blinkinLedDriver .setPattern(patternEndGame);
+            }
+
 
             if (gamepad1.dpad_right) {
                 slideTrainer.setSlideCone4();
@@ -182,7 +202,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                 case LIFT_HIGH:
 
                     //action: check if height is within half inch of target, if not wait until it is
-                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 0.5) {
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 12) {
                         if (turnerState != TurnerState.FORWARD) {
                             turnerTimer.reset();
                             gripper.turnerSetPosition2(); //fwd
@@ -196,7 +216,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
                 case LIFT_MED:
                     //action: check if height is within half inch of target, if not wait until it is
-                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_4) < 0.5) {
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_4) < 3) {
                         if (turnerState != TurnerState.FORWARD) {
                             turnerTimer.reset();
                             gripper.turnerSetPosition2(); //fwd
@@ -227,7 +247,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
                 case LIFT_TURNER_FRONT:
                     //action: check if enough time has passed to turn
-                    if (turnerTimer.seconds() >= 0.3) {
+                    if (turnerTimer.seconds() >= 0.2) {
                         turnerState = TurnerState.FORWARD;
                         liftState = LiftState.LIFT_HOLD;
                     }
@@ -256,10 +276,10 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     break;
 
                 case LIFT_TURNER_BACK:
-                    double timeValue = 0.3;
+                    double timeValue = 0.2;
                     //action: check if enough time has passed to turn
                     if (heightLow == true) {
-                        timeValue = 2;
+                        timeValue = 1;
                     }
                     if (turnerTimer.seconds() >= timeValue) {
                         turnerState = TurnerState.BACK;
