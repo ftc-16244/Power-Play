@@ -202,7 +202,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                 case LIFT_HIGH:
 
                     //action: check if height is within half inch of target, if not wait until it is
-                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 12) {
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_5) < 24) {
                         if (turnerState != TurnerState.FORWARD) {
                             turnerTimer.reset();
                             gripper.turnerSetPosition2(); //fwd
@@ -216,7 +216,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
                 case LIFT_MED:
                     //action: check if height is within half inch of target, if not wait until it is
-                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_4) < 3) {
+                    if (Math.abs(slideTrainer.getSlidePos() - slideTrainer.SLIDE_LEVEL_4) < 12) {
                         if (turnerState != TurnerState.FORWARD) {
                             turnerTimer.reset();
                             gripper.turnerSetPosition2(); //fwd
