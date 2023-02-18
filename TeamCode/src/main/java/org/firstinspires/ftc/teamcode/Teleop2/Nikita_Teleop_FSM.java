@@ -34,7 +34,7 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
     RevBlinkinLedDriver .BlinkinPattern pattern;
     RevBlinkinLedDriver .BlinkinPattern pattern2;
     RevBlinkinLedDriver .BlinkinPattern patternEndGame;
-
+    RevBlinkinLedDriver .BlinkinPattern patternFinale;
 
     FtcDashboard dashboard;
 
@@ -88,8 +88,9 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
         blinkinLedDriver = hardwareMap.get(RevBlinkinLedDriver .class, "blinkin");
         pattern  = RevBlinkinLedDriver .BlinkinPattern.HEARTBEAT_BLUE;
-        pattern2 = RevBlinkinLedDriver .BlinkinPattern.LAWN_GREEN;
+        pattern2 = RevBlinkinLedDriver .BlinkinPattern.DARK_GREEN;
         patternEndGame = RevBlinkinLedDriver .BlinkinPattern.HEARTBEAT_RED;
+        patternFinale = RevBlinkinLedDriver .BlinkinPattern.HEARTBEAT_WHITE;
         blinkinLedDriver .setPattern(pattern);
 
         // Move servos to start postion. Grippers open and track wheels up (for teleop)
@@ -130,9 +131,11 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
                     )
             );
 
-            if (teleopTimer.time() > 25){
+            if (teleopTimer.time() > 93){
                 blinkinLedDriver .setPattern(patternEndGame);
+
             }
+
 
 
             if (gamepad1.dpad_right) {
