@@ -23,7 +23,6 @@ package org.firstinspires.ftc.teamcode.Autonomous_2;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -41,7 +40,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-public class RedLeft3LowCones extends LinearOpMode
+public class RedRight3LowCones extends LinearOpMode
 {
     OpenCvCamera camera;
     AprilTagDetectionPipeline2 aprilTagDetectionPipeline;
@@ -72,18 +71,21 @@ public class RedLeft3LowCones extends LinearOpMode
 
     // Define preset points to save coding time
     // these values are for the blue alliance left hand side
-    Pose2d RedLeftStart =      new Pose2d(-33.5,-61,Math.toRadians(0));
-    Pose2d RedLeftFirstJunct = new Pose2d(-33.5,-45.5,Math.toRadians(0));
-    Pose2d RedLeftSecondJunct = new Pose2d(-36,-24,Math.toRadians(0));
-    Pose2d RedLineEntry      = new Pose2d(-36,-12,Math.toRadians(0));
-    Pose2d SignalDropOff =      new Pose2d(-36,-11.0,Math.toRadians(0));
-    Pose2d RedStack =          new Pose2d(-63,-11.5,Math.toRadians(0));
+    Pose2d BlueRightStart       =   new Pose2d(34,-57.5,Math.toRadians(180));
+    Pose2d BlueRightFirstJunct  =   new Pose2d(34,-42,Math.toRadians(180));
+    Pose2d BlueRightSecondJunct  =   new Pose2d(36.5,-24,Math.toRadians(180));
+    Pose2d BlueLineEntry        =   new Pose2d(36,-12,Math.toRadians(180));
+    Pose2d SignalDropOff        =   new Pose2d(36,-11.5,Math.toRadians(180));
+    Pose2d BlueStack            =   new Pose2d(63.5,-12.5,Math.toRadians(180));
+    Pose2d BlueStackStaging     =   new Pose2d(52,-12,Math.toRadians(180));
+    Pose2d BlueSecondJunct      =   new Pose2d(52,-24,Math.toRadians(40));
+    Pose2d Park3 =              new Pose2d(12,-36,Math.toRadians(180));
+    Pose2d Park2 =              new Pose2d(36,-36,Math.toRadians(180));
+    Pose2d Park1 =              new Pose2d(60,-36,Math.toRadians(180));
 
-    Pose2d Park3 =              new Pose2d(-12,-36,Math.toRadians(0));
-    Pose2d Park2 =              new Pose2d(-36,-36,Math.toRadians(0));
-    Pose2d Park1 =              new Pose2d(-60,-36,Math.toRadians(0));
+    /*
 
-
+     */
     @Override
     public void runOpMode()
     {
@@ -93,7 +95,7 @@ public class RedLeft3LowCones extends LinearOpMode
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline2(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
@@ -203,14 +205,14 @@ public class RedLeft3LowCones extends LinearOpMode
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
             telemetry.update();
         }
-        camera.stopStreaming();
+
 
         //Pose2d startPose = new Pose2d(0, 0, 0);
-        drive.setPoseEstimate(RedLeftStart);
+        drive.setPoseEstimate(BlueRightStart);
 
-        //Positions the robot at the low pole
-        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(RedLeftStart)
-                .lineToLinearHeading(RedLeftFirstJunct)
+        //Positions the start point
+        TrajectorySequence traj1 = drive.trajectorySequenceBuilder(BlueRightStart)
+                .lineToLinearHeading(BlueRightFirstJunct)
                 .addTemporalMarker(0.0, ()->{slideTrainer.setSlideLevel3();})
                 .addTemporalMarker(0.5,()->{gripper.turnerSetPosition2();})
                 .forward(4)
@@ -226,39 +228,41 @@ public class RedLeft3LowCones extends LinearOpMode
 
         drive.followTrajectorySequence(traj1);
 
+
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
 
-                .lineToLinearHeading(RedStack)
+                .lineToLinearHeading(BlueStack)
                 //.waitSeconds(.15)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
                 .waitSeconds(.15)
-                .lineToLinearHeading(RedLineEntry)
+                .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .lineToLinearHeading(RedLeftSecondJunct)
+                .lineToLinearHeading(BlueRightSecondJunct)
+                .waitSeconds(.25)
                 .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
-
+                .waitSeconds(.15)
                 .build();
 
-       drive.followTrajectorySequence(traj2);
+        drive.followTrajectorySequence(traj2);
 
 
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
 
                 .forward(5)
-                .lineToLinearHeading(RedLineEntry)
+                .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideCone4();})
-                .lineToLinearHeading(RedStack)
+                .lineToLinearHeading(BlueStack)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
-                .waitSeconds(.15)
-                .lineToLinearHeading(RedLineEntry)
+                .waitSeconds(.25)
+                .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .lineToLinearHeading(RedLeftSecondJunct)
+                .lineToLinearHeading(BlueRightSecondJunct)
                 .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
@@ -275,7 +279,7 @@ public class RedLeft3LowCones extends LinearOpMode
                     .lineToLinearHeading(Park1)
                     .build();
 
-           drive.followTrajectorySequence(traj4);
+            drive.followTrajectorySequence(traj4);
         }
         else if(tagOfInterest.id == MIDDLE) {
 
@@ -315,7 +319,8 @@ public class RedLeft3LowCones extends LinearOpMode
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-
+        while (!isStopRequested() && opModeIsActive());
+        camera.stopStreaming();
     }
 
     void tagToTelemetry(AprilTagDetection detection)

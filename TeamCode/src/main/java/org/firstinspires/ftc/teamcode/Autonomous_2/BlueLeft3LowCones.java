@@ -41,7 +41,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-@Disabled
+//@Disabled
 public class BlueLeft3LowCones extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -73,8 +73,8 @@ public class BlueLeft3LowCones extends LinearOpMode
 
     // Define preset points to save coding time
     // these values are for the blue alliance left hand side
-    Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(180));
-    Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(180));
+    Pose2d BlueLeftStart =      new Pose2d(33.5,61,Math.toRadians(180));
+    Pose2d BlueLeftFirstJunct = new Pose2d(33.5,45.5,Math.toRadians(180));
     Pose2d BlueLeftSecondJunct = new Pose2d(36,24,Math.toRadians(180));
     Pose2d BlueLineEntry      = new Pose2d(36,12,Math.toRadians(180));
     Pose2d SignalDropOff =      new Pose2d(36,11,Math.toRadians(180));
@@ -119,7 +119,6 @@ public class BlueLeft3LowCones extends LinearOpMode
         slideTrainer.init(hardwareMap);
         gripper.init(hardwareMap);
         trackingWheelLifters.init(hardwareMap);
-
 
         gripper.turnerSetPosition1();
         gripper.gripperClosed();
