@@ -41,7 +41,6 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import java.util.ArrayList;
 
 @Autonomous
-@Disabled
 public class BlueLeft3LowCones extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -75,7 +74,7 @@ public class BlueLeft3LowCones extends LinearOpMode
     // these values are for the blue alliance left hand side
     Pose2d BlueLeftStart =      new Pose2d(34,61,Math.toRadians(180));
     Pose2d BlueLeftFirstJunct = new Pose2d(34,45.5,Math.toRadians(180));
-    Pose2d BlueLeftSecondJunct = new Pose2d(36,24,Math.toRadians(180));
+    Pose2d BlueLeftSecondJunct = new Pose2d(36,24.25,Math.toRadians(180));
     Pose2d BlueLineEntry      = new Pose2d(36,12,Math.toRadians(180));
     Pose2d SignalDropOff =      new Pose2d(36,11,Math.toRadians(180));
     Pose2d BlueStack =          new Pose2d(63,11.5,Math.toRadians(180));
@@ -83,6 +82,7 @@ public class BlueLeft3LowCones extends LinearOpMode
     Pose2d BlueSecondJunct =    new Pose2d(52,24,Math.toRadians(140));
     Pose2d Park3 =              new Pose2d(12,36,Math.toRadians(180));
     Pose2d Park2 =              new Pose2d(36,36,Math.toRadians(180));
+    Pose2d Park2a =             new Pose2d(35.5,36,Math.toRadians(180));
     Pose2d Park1 =              new Pose2d(60,36,Math.toRadians(180));
 
 
@@ -283,6 +283,7 @@ public class BlueLeft3LowCones extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{slideTrainer.setSlideLevel1();})
+                    .lineToLinearHeading(Park2a)
                     .build();
 
             drive.followTrajectorySequence(traj5);
@@ -302,7 +303,7 @@ public class BlueLeft3LowCones extends LinearOpMode
         }
 
         // make sure to have a null case to try and park if you dont see a tag
-
+/*
         else {
 
             TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj3.end())
@@ -313,6 +314,8 @@ public class BlueLeft3LowCones extends LinearOpMode
 
         }
 
+
+ */
 
 
 
