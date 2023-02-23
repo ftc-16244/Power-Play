@@ -205,7 +205,7 @@ public class BlueLeft3LowCones extends LinearOpMode
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
             telemetry.update();
         }
-
+        camera.stopStreaming();
 
         //Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(BlueLeftStart);
@@ -303,7 +303,7 @@ public class BlueLeft3LowCones extends LinearOpMode
         }
 
         // make sure to have a null case to try and park if you dont see a tag
-/*
+
         else {
 
             TrajectorySequence traj7 = drive.trajectorySequenceBuilder(traj3.end())
@@ -315,13 +315,10 @@ public class BlueLeft3LowCones extends LinearOpMode
         }
 
 
- */
-
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (!isStopRequested() && opModeIsActive());
-        camera.stopStreaming();
+
     }
 
     void tagToTelemetry(AprilTagDetection detection)

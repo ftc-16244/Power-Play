@@ -74,7 +74,7 @@ public class RedLeft3LowCones extends LinearOpMode
     // these values are for the blue alliance left hand side
     Pose2d RedLeftStart =      new Pose2d(-34,-61,Math.toRadians(0));
     Pose2d RedLeftFirstJunct = new Pose2d(-34,-45.5,Math.toRadians(0));
-    Pose2d RedLeftSecondJunct = new Pose2d(-36,-24,Math.toRadians(0));
+    Pose2d RedLeftSecondJunct = new Pose2d(-36,-24.25,Math.toRadians(0));
     Pose2d RedLineEntry      = new Pose2d(-36,-12,Math.toRadians(0));
     Pose2d SignalDropOff =      new Pose2d(-36,-11.0,Math.toRadians(0));
     Pose2d RedStack =          new Pose2d(-63,-11.5,Math.toRadians(0));
@@ -281,6 +281,7 @@ public class RedLeft3LowCones extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{slideTrainer.setSlideLevel1();})
+					.waitSeconds(0.25)
                     .build();
 
             drive.followTrajectorySequence(traj5);
