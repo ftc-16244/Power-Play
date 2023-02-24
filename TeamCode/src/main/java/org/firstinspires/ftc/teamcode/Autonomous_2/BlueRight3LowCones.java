@@ -83,9 +83,7 @@ public class BlueRight3LowCones extends LinearOpMode
     Pose2d Park2 =              new Pose2d(-36,36,Math.toRadians(0));
     Pose2d Park1 =              new Pose2d(-60,36,Math.toRadians(0));
 
-/*
 
- */
     @Override
     public void runOpMode()
     {
@@ -205,7 +203,7 @@ public class BlueRight3LowCones extends LinearOpMode
             telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
             telemetry.update();
         }
-
+        camera.stopStreaming();
 
         //Pose2d startPose = new Pose2d(0, 0, 0);
         drive.setPoseEstimate(BlueRightStart);
@@ -228,7 +226,6 @@ public class BlueRight3LowCones extends LinearOpMode
 
         drive.followTrajectorySequence(traj1);
 
-
         TrajectorySequence traj2 = drive.trajectorySequenceBuilder(traj1.end())
 
                 .lineToLinearHeading(BlueStack)
@@ -240,15 +237,12 @@ public class BlueRight3LowCones extends LinearOpMode
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .lineToLinearHeading(BlueRightSecondJunct)
-                .waitSeconds(.15)
                 .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
-                .waitSeconds(.15)
                 .build();
 
        drive.followTrajectorySequence(traj2);
-
 
         TrajectorySequence traj3 = drive.trajectorySequenceBuilder(traj2.end())
 
@@ -285,6 +279,7 @@ public class BlueRight3LowCones extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{slideTrainer.setSlideLevel1();})
+					.waitSeconds(1.25)
                     .build();
 
             drive.followTrajectorySequence(traj5);
@@ -319,8 +314,7 @@ public class BlueRight3LowCones extends LinearOpMode
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-        while (!isStopRequested() && opModeIsActive());
-        camera.stopStreaming();
+        
     }
 
     void tagToTelemetry(AprilTagDetection detection)

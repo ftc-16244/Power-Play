@@ -238,11 +238,9 @@ public class BlueLeft3LowCones extends LinearOpMode
                 .waitSeconds(.15)
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
-                .lineToLinearHeading(BlueLeftSecondJunct)
-                .back(5)
+                .lineToLinearHeading(BlueLeftSecondJunct)                .back(5)
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
-
                 .build();
 
        drive.followTrajectorySequence(traj2);
@@ -318,7 +316,6 @@ public class BlueLeft3LowCones extends LinearOpMode
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
-
     }
 
     void tagToTelemetry(AprilTagDetection detection)
