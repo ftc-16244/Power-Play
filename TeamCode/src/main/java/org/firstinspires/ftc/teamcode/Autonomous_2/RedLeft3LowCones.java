@@ -281,7 +281,7 @@ public class RedLeft3LowCones extends LinearOpMode
 
             TrajectorySequence traj5 = drive.trajectorySequenceBuilder(traj3.end())
                     .UNSTABLE_addTemporalMarkerOffset(0, ()->{slideTrainer.setSlideLevel1();})
-					.waitSeconds(0.25)
+					.waitSeconds(1.25)
                     .build();
 
             drive.followTrajectorySequence(traj5);
