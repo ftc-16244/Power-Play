@@ -72,16 +72,16 @@ public class BlueRight3LowCones extends LinearOpMode
     // Define preset points to save coding time
     // these values are for the blue alliance left hand side
     Pose2d BlueRightStart       =   new Pose2d(-34,57.5,Math.toRadians(0));
-    Pose2d BlueRightFirstJunct  =   new Pose2d(-34,41.5,Math.toRadians(0));
-    Pose2d BlueRightSecondJunct  =   new Pose2d(-36,24,Math.toRadians(0));
+    Pose2d BlueRightFirstJunct  =   new Pose2d(-34,42.25,Math.toRadians(0));
+    Pose2d BlueRightSecondJunct  =   new Pose2d(-36.5,24,Math.toRadians(0));
     Pose2d BlueLineEntry        =   new Pose2d(-36,12,Math.toRadians(0));
     Pose2d SignalDropOff        =   new Pose2d(-36,11.5,Math.toRadians(0));
-    Pose2d BlueStack            =   new Pose2d(-60,11.5,Math.toRadians(0));
+    Pose2d BlueStack            =   new Pose2d(-63.5,12.5,Math.toRadians(0));
     Pose2d BlueStackStaging     =   new Pose2d(-52,12,Math.toRadians(0));
     Pose2d BlueSecondJunct      =   new Pose2d(-52,24,Math.toRadians(40));
-    Pose2d Park3 =              new Pose2d(-12,36,Math.toRadians(0));
+    Pose2d Park3 =              new Pose2d(-60,36,Math.toRadians(0));
     Pose2d Park2 =              new Pose2d(-36,36,Math.toRadians(0));
-    Pose2d Park1 =              new Pose2d(-60,36,Math.toRadians(0));
+    Pose2d Park1 =              new Pose2d(-13,36,Math.toRadians(0));
 
 
     @Override
@@ -233,7 +233,7 @@ public class BlueRight3LowCones extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
-                .waitSeconds(.15)
+                .waitSeconds(.25)
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .lineToLinearHeading(BlueRightSecondJunct)
@@ -253,7 +253,7 @@ public class BlueRight3LowCones extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
-                .waitSeconds(.15)
+                .waitSeconds(.25)
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .lineToLinearHeading(BlueRightSecondJunct)
