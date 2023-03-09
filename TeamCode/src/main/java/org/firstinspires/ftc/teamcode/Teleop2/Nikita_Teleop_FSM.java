@@ -24,7 +24,6 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
 
 
     ElapsedTime runtime = new ElapsedTime();
-
     ElapsedTime turnerTimer = new ElapsedTime();
 
     private ElapsedTime teleopTimer = new ElapsedTime();
@@ -178,7 +177,10 @@ public class Nikita_Teleop_FSM extends LinearOpMode {
             }
 //// GAMEPAD #2/////////////////////////
 
-
+            if (gamepad2.dpad_up) {
+                slideTrainer.setSlideLevel4();
+                liftState = LiftState.LIFT_MED;
+            }
             switch(liftState) {
                 case LIFT_IDLE:
                     //do nothing, waiting for driver input
