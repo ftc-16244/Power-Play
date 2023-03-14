@@ -73,7 +73,7 @@ public class BlueRight3LowCones extends LinearOpMode
     // these values are for the blue alliance left hand side
     Pose2d BlueRightStart       =   new Pose2d(-34,57.5,Math.toRadians(0));
     Pose2d BlueRightFirstJunct  =   new Pose2d(-34,42.25,Math.toRadians(0));
-    Pose2d BlueRightSecondJunct  =   new Pose2d(-36.5,24,Math.toRadians(0));
+    Pose2d BlueRightSecondJunct  =   new Pose2d(-36.5,23.5,Math.toRadians(0));
     Pose2d BlueLineEntry        =   new Pose2d(-36,12,Math.toRadians(0));
     Pose2d SignalDropOff        =   new Pose2d(-36,11.5,Math.toRadians(0));
     Pose2d BlueStack            =   new Pose2d(-63.5,12.5,Math.toRadians(0));

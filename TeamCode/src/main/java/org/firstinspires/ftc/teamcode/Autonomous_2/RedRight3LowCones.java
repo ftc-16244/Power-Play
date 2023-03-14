@@ -230,7 +230,7 @@ public class RedRight3LowCones extends LinearOpMode
 
                 .lineToLinearHeading(BlueStack)
                 //.waitSeconds(.15)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
+                //.UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
                 .waitSeconds(.25)
@@ -238,7 +238,7 @@ public class RedRight3LowCones extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .lineToLinearHeading(BlueRightSecondJunct)
                 .back(5)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
+                //.UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
                 .build();
 
@@ -251,7 +251,7 @@ public class RedRight3LowCones extends LinearOpMode
                 .lineToLinearHeading(BlueLineEntry)
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideCone4();})
                 .lineToLinearHeading(BlueStack)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
+                //.UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.topArmClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.gripperClosed();})
                 .UNSTABLE_addTemporalMarkerOffset(0.25,()->{slideTrainer.setSlideCone6();})
                 .waitSeconds(.25)
@@ -259,7 +259,7 @@ public class RedRight3LowCones extends LinearOpMode
                 .UNSTABLE_addTemporalMarkerOffset(0,()->{slideTrainer.setSlideLevel3();})
                 .lineToLinearHeading(BlueRightSecondJunct)
                 .back(5)
-                .UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
+                //.UNSTABLE_addTemporalMarkerOffset(0.0,()->{gripper.TopArmOpen();})
                 .UNSTABLE_addTemporalMarkerOffset(0.1,()->{gripper.gripperOpen();})
                 .lineToLinearHeading(Park2)
                 .build();
